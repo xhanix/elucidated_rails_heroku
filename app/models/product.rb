@@ -12,5 +12,5 @@ class Product < ApplicationRecord
     "image/gif",
     "application/pdf",
     "application/zip"
-]
+    ]
 end
