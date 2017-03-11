@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  guid: MyString
+  product: one
+  stripe_id: MyString
+
+two:
+  email: MyString
+  guid: MyString
+  product: two
+  stripe_id: MyString

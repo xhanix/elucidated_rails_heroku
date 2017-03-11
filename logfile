@@ -1,0 +1,9 @@
+LOG:  database system was shut down at 2017-03-11 09:23:37 EST
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  relation "users" does not exist
+STATEMENT:  CREATE TABLE "products" ("id" serial primary key, "name" character varying, "permalink" character varying, "description" text, "price" integer, "user_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_dee2631783"
+	FOREIGN KEY ("user_id")
+	  REFERENCES "users" ("id")
+	)
