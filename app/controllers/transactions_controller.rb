@@ -1,10 +1,13 @@
 class TransactionsController < ApplicationController
 
 	def new
+		respond_to do |format|
 		@product = Product.find_by!(
 			permalink: params[:permalink]
 			)
 		puts @product.name
+		format.html { render 'new'}
+	end
 	end
 
 	def pickup
