@@ -4,6 +4,7 @@ class TransactionsController < ApplicationController
 		@product = Product.find_by!(
 			permalink: params[:permalink]
 			)
+		puts @product
 	end
 
 	def pickup
