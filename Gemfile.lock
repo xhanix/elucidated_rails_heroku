@@ -1,6 +1,6 @@
 GEM
-  remote: https://code.stripe.com/
   remote: https://rubygems.org/
+  remote: https://code.stripe.com/
   specs:
     actioncable (5.0.2)
       actionpack (= 5.0.2)
@@ -210,7 +210,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   spring
   spring-watcher-listen (~> 2.0.0)
-  stripe (~> 1.26.0)
+  stripe (~> 1.26.0)!
   stripe-ruby-mock
   turbolinks (~> 5)
   tzinfo-data

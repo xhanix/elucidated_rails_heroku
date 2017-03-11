@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'stripe', '~> 1.26.0'
+gem 'stripe', '~> 1.26.0' , :source => 'https://code.stripe.com/'
 gem 'httparty'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
