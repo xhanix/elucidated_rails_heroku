@@ -24,7 +24,29 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
-
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  address:        ENV['SPARKPOST_SMTP_HOST'],
+  port:
+user_name:
+password:
+domain:
+authentication: :plain
+ENV['SPARKPOST_SMTP_PORT'],
+ENV['SPARKPOST_SMTP_USERNAME'],
+ENV['SPARKPOST_SMTP_PASSWORD'],
+'heroku.com',
+}
+config.action_mailer.default_url_options = {
+  :host => 'mysterious-badlands-15534.herokuapp.com'
+}
+config.paperclip_defaults = {
+  storage: :s3,
+  s3_credentials: {
+    bucket: ENV['AWS_BUCKET'],
+    access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+    secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+} }
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
