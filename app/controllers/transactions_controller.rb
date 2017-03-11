@@ -4,7 +4,7 @@ class TransactionsController < ApplicationController
 		@product = Product.find_by!(
 			permalink: params[:permalink]
 			)
-	end
+	
 	end
 
 	def pickup
