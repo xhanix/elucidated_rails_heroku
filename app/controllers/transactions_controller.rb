@@ -6,7 +6,7 @@ class TransactionsController < ApplicationController
 			permalink: params[:permalink]
 			)
 		puts @product.name
-		format.html { render 'new'}
+		format.html { render 'new.html.erb'}
 	end
 	end
 
