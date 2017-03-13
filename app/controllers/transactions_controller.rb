@@ -23,14 +23,14 @@ class TransactionsController < ApplicationController
 			permalink: params[:permalink]
 			)
 		
-		sale = @product.sales.create(
+		sale = @product.sale.create(
 			amount:       @product.price,
 			email:        params[:email],
 			stripe_token: params[:stripeToken]
 			)
 
 		sale.process!
-		
+
 		if sale.finished?
 			redirect_to pickup_url(guid: sale.guid)
 		else
