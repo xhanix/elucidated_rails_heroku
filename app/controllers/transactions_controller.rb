@@ -19,9 +19,9 @@ class TransactionsController < ApplicationController
 	end
 
 	def create
-		product = Product.find_by!(
-			permalink: params[:permalink]
-			)
+		@product = Product.find_by!(
+    permalink: params[:permalink]
+  )
 		
 		sale = @product.sales.create(
 			amount:       @product.price,
