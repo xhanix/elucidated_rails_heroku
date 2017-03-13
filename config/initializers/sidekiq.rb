@@ -1,9 +1,6 @@
-
-
 Sidekiq.configure_server do |config|
   config.redis = { url: ENV["REDISTOGO_URL"], namespace: :resque }
-  config.reliable_fetch!
-
+  
   database_url = ENV['DATABASE_URL']
   if database_url
     ENV['DATABASE_URL'] = "#{database_url}?pool=250"
