@@ -16,5 +16,3 @@ end
 Sidekiq.configure_client do |config|
   config.redis = { url: ENV["REDISTOGO_URL"], namespace: :resque }
 end
-
-Sidekiq::Client.reliable_push! unless Rails.env.test?
