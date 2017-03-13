@@ -1,5 +1,5 @@
 Sidekiq.configure_server do |config|
-  config.redis = { url: ENV["REDISTOGO_URL"], size: 20  }
+  config.redis = { url: ENV["REDISTOGO_URL"], size: 42  }
   
   database_url = ENV['DATABASE_URL']
   if database_url
