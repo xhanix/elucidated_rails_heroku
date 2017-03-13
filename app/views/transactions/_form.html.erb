@@ -19,9 +19,6 @@
     <button class="btn btn-block btn-primary" type="submit">Subscribe $149.99/YR</button>
     <div class="outcome">
       <div class="error"></div>
-      <div class="success">
-        Success! Your Stripe token is <span class="token"></span>
-      </div>
     </div>
   <% end %>
   </div>
@@ -141,7 +138,6 @@ label .field.is-focused + span {
 }
 </style>
 
-<script src="https://js.stripe.com/v3/"></script>
 <script type="text/javascript">
 var stripe = Stripe("<%= Rails.configuration.stripe[:publishable_key] %>");
 var elements = stripe.elements();
@@ -191,10 +187,9 @@ inputs.forEach(function(input) {
 });
 
 function poll(guid, num_retries_left) {
-  var successElement = document.querySelector('.success');
   var errorElement = document.querySelector('.error');
 	if (num_retries_left == 0) {
-		errorElement.textContent = "This seems to be taking too long. Email help@example.com and reference transaction:" +  guid + " and we'll take a look.";
+		errorElement.textContent = "This seems to be taking too long. Email help@elucidaid.com and reference transaction:" +  guid + " and we'll take a look.";
 		errorElement.classList.add('visible');
 		return; 
 	}
@@ -212,27 +207,21 @@ function poll(guid, num_retries_left) {
 }
 
 function setOutcome(result) {
-  var successElement = document.querySelector('.success');
   var errorElement = document.querySelector('.error');
-  successElement.classList.remove('visible');
   errorElement.classList.remove('visible');
   if (result.token) {
     // Use the token to create a charge or a customer
     // https://stripe.com/docs/charges
     var form = $('#payment-form');
     form.append($('<input type="hidden" name="stripeToken">').val(result.token.id));
-    console.log('FORM:');
-    console.log($('#payment-form').serialize());
+    alert($('#payment-form').serialize());
     $.ajax({
         type: "POST",
         url: "/buy/<%= permalink %>",
         data: $('#payment-form').serialize(),
-        success: function(data) { console.log("*******"+data); poll(data.guid, 30) },
-        error: function(data) { console.log("*********"+data); errorElement.textContent = data.responseJSON.error;errorElement.classList.add('visible'); }
+        success: function(data) {poll(data.guid, 30) },
+        error: function(data) { errorElement.textContent = data.responseJSON.error;errorElement.classList.add('visible'); }
     });
-
-    successElement.querySelector('.token').textContent = result.token.id;
-    successElement.classList.add('visible');
   } else if (result.error) {
     errorElement.textContent = result.error.message;
     errorElement.classList.add('visible');
@@ -248,7 +237,6 @@ document.querySelector('form').addEventListener('submit', function(e) {
   var form = document.querySelector('form');
   var extraDetails = {
     name: form.querySelector('input[name=cardholder-name]').value,
-    email:form.querySelector('input[name=cardholder-email]').value,
   };
   stripe.createToken(card, extraDetails).then(setOutcome);
 });

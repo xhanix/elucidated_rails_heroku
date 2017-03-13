@@ -36,7 +36,6 @@ class Sale < ApplicationRecord
 	end
 	def charge_card
 		begin
-			puts "***** charging card *****"
 			save!
 			charge = Stripe::Charge.create(
 				amount: self.amount,
