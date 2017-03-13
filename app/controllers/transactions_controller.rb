@@ -33,7 +33,7 @@ class TransactionsController < ApplicationController
 		end
 
 		if sale.save
-			StripeCharger.perform_async(sale.guid)
+			StripeChargerWorker.perform_async(sale.guid)
 			render json: { guid: sale.guid }
 		else
 			errors = sale.errors.full_messages
