@@ -32,6 +32,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 #
  preload_app!
 
+before_fork do  
  puts "Puma master process about to fork. Closing existing Active record connections."
   ActiveRecord::Base.connection.disconnect!
 end
