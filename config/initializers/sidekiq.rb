@@ -6,9 +6,6 @@ Sidekiq.configure_server do |config|
     ENV['DATABASE_URL'] = "#{database_url}?pool=250"
     ActiveRecord::Base.establish_connection
   end
-
-  $elastic = Elasticsearch::Client.new
-  Stretchy.client = $elastic
 end
 
 Sidekiq.configure_client do |config|
