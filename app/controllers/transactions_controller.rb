@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-	before_action :strip_iframe_protection
+	before_filter :strip_iframe_protection
 	def iframe
 		@product = Product.find_by!(permalink: params[:permalink])
 		@sale = Sale.new(product_id: @product)
@@ -22,19 +22,20 @@ class TransactionsController < ApplicationController
 		product = Product.find_by!(
 			permalink: params[:permalink]
 			)
-		token = params[:stripeToken]
-		sale = Sale.new do |s|
-			s.amount = product.price,
-			s.product_id = product.id,
-			s.stripe_token = token,
-			s.email = params[:email]
-		end
-		if sale.save
-			StripeCharger.perform_async(sale.guid)
-			render json: { guid: sale.guid }
+		
+		sale = @product.sales.create(
+			amount:       @product.price,
+			email:        params[:email],
+			stripe_token: params[:stripeToken]
+			)
+
+		sale.process!
+		
+		if sale.finished?
+			redirect_to pickup_url(guid: sale.guid)
 		else
-			errors = sale.errors.full_messages
-			render json: {error: errors.join(" ")}, status: 400
+			flash.now[:alert] = sale.error
+			render :new
 		end
 	end
 
