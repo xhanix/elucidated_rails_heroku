@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170311143318) do
+ActiveRecord::Schema.define(version: 20170312201252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,9 +33,32 @@ ActiveRecord::Schema.define(version: 20170311143318) do
     t.string   "guid"
     t.integer  "product_id"
     t.string   "stripe_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "state"
+    t.string   "stripe_token"
+    t.date     "card_expiration"
+    t.text     "error"
+    t.integer  "fee_amount"
+    t.integer  "amount"
+    t.index ["product_id"], name: "index_sales_on_product_id", using: :btree
+  end
+
+  create_table "stripe_webhooks", force: :cascade do |t|
+    t.string   "stripe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_sales_on_product_id", using: :btree
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "item_type",      null: false
+    t.integer  "item_id",        null: false
+    t.string   "event",          null: false
+    t.string   "whodunnit"
+    t.text     "object"
+    t.datetime "created_at"
+    t.text     "object_changes"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
   add_foreign_key "sales", "products"

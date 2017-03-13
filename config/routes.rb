@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   post '/buy/:permalink', to:'transactions#create', as: :buy
   get '/pickup/:guid', to:'transactions#pickup', as: :pickup
   get  '/download/:guid', to: 'transactions#download', as: :download
+  get  '/status/:guid', to: 'transactions#status', as: :status
+  mount StripeEvent::Engine => '/stripe-events'
+  match '/iframe/:permalink' => 'transactions#iframe', via: :get, as: :buy_iframe
 end

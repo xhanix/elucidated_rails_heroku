@@ -7,3 +7,77 @@ STATEMENT:  CREATE TABLE "products" ("id" serial primary key, "name" character v
 	FOREIGN KEY ("user_id")
 	  REFERENCES "users" ("id")
 	)
+ERROR:  column "stripe_id" of relation "sales" already exists
+STATEMENT:  ALTER TABLE "sales" ADD "stripe_id" character varying
+ERROR:  relation "versions" does not exist at character 563
+STATEMENT:                SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	                     pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	             (SELECT c.collname FROM pg_collation c, pg_type t
+	               WHERE c.oid = a.attcollation AND t.oid = a.atttypid AND a.attcollation <> t.typcollation),
+	                     col_description(a.attrelid, a.attnum) AS comment
+	                FROM pg_attribute a LEFT JOIN pg_attrdef d
+	                  ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	               WHERE a.attrelid = '"versions"'::regclass
+	                 AND a.attnum > 0 AND NOT a.attisdropped
+	               ORDER BY a.attnum
+	
+ERROR:  relation "versions" does not exist at character 563
+STATEMENT:                SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	                     pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	             (SELECT c.collname FROM pg_collation c, pg_type t
+	               WHERE c.oid = a.attcollation AND t.oid = a.atttypid AND a.attcollation <> t.typcollation),
+	                     col_description(a.attrelid, a.attnum) AS comment
+	                FROM pg_attribute a LEFT JOIN pg_attrdef d
+	                  ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	               WHERE a.attrelid = '"versions"'::regclass
+	                 AND a.attnum > 0 AND NOT a.attisdropped
+	               ORDER BY a.attnum
+	
+ERROR:  relation "versions" does not exist at character 563
+STATEMENT:                SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	                     pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	             (SELECT c.collname FROM pg_collation c, pg_type t
+	               WHERE c.oid = a.attcollation AND t.oid = a.atttypid AND a.attcollation <> t.typcollation),
+	                     col_description(a.attrelid, a.attnum) AS comment
+	                FROM pg_attribute a LEFT JOIN pg_attrdef d
+	                  ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	               WHERE a.attrelid = '"versions"'::regclass
+	                 AND a.attnum > 0 AND NOT a.attisdropped
+	               ORDER BY a.attnum
+	
+ERROR:  relation "versions" does not exist at character 563
+STATEMENT:                SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	                     pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	             (SELECT c.collname FROM pg_collation c, pg_type t
+	               WHERE c.oid = a.attcollation AND t.oid = a.atttypid AND a.attcollation <> t.typcollation),
+	                     col_description(a.attrelid, a.attnum) AS comment
+	                FROM pg_attribute a LEFT JOIN pg_attrdef d
+	                  ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	               WHERE a.attrelid = '"versions"'::regclass
+	                 AND a.attnum > 0 AND NOT a.attisdropped
+	               ORDER BY a.attnum
+	
+ERROR:  relation "versions" does not exist at character 563
+STATEMENT:                SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	                     pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	             (SELECT c.collname FROM pg_collation c, pg_type t
+	               WHERE c.oid = a.attcollation AND t.oid = a.atttypid AND a.attcollation <> t.typcollation),
+	                     col_description(a.attrelid, a.attnum) AS comment
+	                FROM pg_attribute a LEFT JOIN pg_attrdef d
+	                  ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	               WHERE a.attrelid = '"versions"'::regclass
+	                 AND a.attnum > 0 AND NOT a.attisdropped
+	               ORDER BY a.attnum
+	
+ERROR:  relation "versions" does not exist at character 563
+STATEMENT:                SELECT a.attname, format_type(a.atttypid, a.atttypmod),
+	                     pg_get_expr(d.adbin, d.adrelid), a.attnotnull, a.atttypid, a.atttypmod,
+	             (SELECT c.collname FROM pg_collation c, pg_type t
+	               WHERE c.oid = a.attcollation AND t.oid = a.atttypid AND a.attcollation <> t.typcollation),
+	                     col_description(a.attrelid, a.attnum) AS comment
+	                FROM pg_attribute a LEFT JOIN pg_attrdef d
+	                  ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+	               WHERE a.attrelid = '"versions"'::regclass
+	                 AND a.attnum > 0 AND NOT a.attisdropped
+	               ORDER BY a.attnum
+	

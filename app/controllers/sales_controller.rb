@@ -25,7 +25,6 @@ class SalesController < ApplicationController
   # POST /sales.json
   def create
     @sale = Sale.new(sale_params)
-
     respond_to do |format|
       if @sale.save
         format.html { redirect_to @sale, notice: 'Sale was successfully created.' }
