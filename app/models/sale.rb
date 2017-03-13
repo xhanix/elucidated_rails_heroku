@@ -38,7 +38,6 @@ class Sale < ApplicationRecord
 		begin
 			puts "***** charging card *****"
 			save!
-			Stripe.api_key = Rails.configuration.stripe[:secret_key]
 			charge = Stripe::Charge.create(
 				amount: self.amount,
 				currency: "usd",
