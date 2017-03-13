@@ -23,7 +23,7 @@ class TransactionsController < ApplicationController
 			permalink: params[:permalink]
 			)
 		
-		sale = @product.sale.create(
+		sale = @product.sales.create(
 			amount:       @product.price,
 			email:        params[:email],
 			stripe_token: params[:stripeToken]
