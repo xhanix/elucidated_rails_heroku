@@ -19,16 +19,15 @@ class TransactionsController < ApplicationController
 	end
 
 	def create
-		product = Product.find_by!(
+		@product = Product.find_by!(
 			permalink: params[:permalink]
 			)
 
 		token = params[:stripeToken]
 		
 		@sale = Sale.new do |s|
-			
-			s.amount = product.price,
-			s.product_id = product.id,
+			s.amount = @product.price,
+			s.product_id = @product.id,
 			s.stripe_token = token,
 			s.email = params[:email]
 		end
