@@ -32,7 +32,7 @@ class TransactionsController < ApplicationController
 			s.stripe_token = token,
 			s.email = params[:email]
 		end
-		puts "***********"+sale+"**************";
+		puts "***********"+sale.amount.to_s+"**************";
 
 		if sale.save
 			StripeChargerWorker.perform_async(sale.guid)
