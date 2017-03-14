@@ -19,25 +19,24 @@ class TransactionsController < ApplicationController
 	end
 
 	def create
-		@product = Product.find_by!(
+		product = Product.find_by!(
 			permalink: params[:permalink]
 			)
 
 		token = params[:stripeToken]
-		
-		@sale = Sale.new do |s|
-			s.amount = @product.price,
-			s.product_id = @product.id,
+
+		sale = Sale.new do |s|
+			s.amount = product.price,
+			s.product_id = product.id,
 			s.stripe_token = token,
 			s.email = params[:email]
 		end
-		puts "***********"+@sale.amount.to_s+"**************";
 
-		if @sale.save
+		if sale.save
 			StripeChargerWorker.perform_async(sale.guid)
 			render json: { guid: sale.guid }
 		else
-			errors = @sale.errors.full_messages
+			errors = sale.errors.full_messages
 			render json: {
 				error: errors.join(" ")
 				}, status: 400
