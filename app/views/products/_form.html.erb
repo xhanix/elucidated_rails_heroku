@@ -11,32 +11,40 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class =>'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :permalink %>
-    <%= f.text_field :permalink %>
+    <%= f.text_field :permalink, :class =>'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :description %>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, :class =>'form-control' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :price %>
-    <%= f.number_field :price %>
+    <%= f.number_field :price, :class =>'form-control' %>
   </div>
+  <%if @plans%>
+  <div class="form-group">
+  <%= f.collection_select :plan, @plans, :id, :name, {}, {class: "form-control"} %>
+  </div>
+  <%end%>
 
-  <div class="field">
+
+
+
+  <div class="form-group">
   <%= f.label :file %><br />
-  <%= f.file_field :file %>
+  <%= f.file_field :file, :class =>'btn btn-warning' %>
 </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'btn btn-primary' %>
   </div>
 <% end %>

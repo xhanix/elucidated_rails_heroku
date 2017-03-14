@@ -1,0 +1,256 @@
+<% unless @subscription.errors.blank? %>
+  <%= @subscription.errors.full_messages.to_sentence %>
+<% end %>
+
+<h2>Subscribing to <%= @plan.name %></h2>
+
+<!-- end header content -->
+<div class="row">
+<div class="col-xs-8 col-sm-6 col-lg-4 col-md-5  col-centered" style="float: none; margin: 0 auto;">
+<div class="well">
+  <%= form_for @subscription, html: { id: 'payment-form' } do |f| %>
+    <input type="hidden" name="plan_id" value="<%= @plan.id %>" />
+    <label>
+      <input name="cardholder-name" class="field is-empty" placeholder="" />
+      <span><span>Name</span></span>
+    </label>
+    <label>
+      <input name="email" class="field is-empty" placeholder="" type="email" />
+      <span><span>Email</span></span>
+    </label>
+    <label>
+      <div id="card-element" class="field is-empty"></div>
+      <span><span>Card Number</span></span>
+    </label>
+    <button class="btn btn-block btn-primary" type="submit" name="submit">Subscribe $149.99/YR</button>
+    <div class="outcome">
+      <div class="error"></div>
+    </div>
+  <% end %>
+  </div>
+</div>
+</div>
+<style type="text/css">
+  
+  * {
+  font-family: "Helvetica Neue", Helvetica;
+  font-size: 19px;
+  font-variant: normal;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+label {
+  position: relative;
+  color: #8798AB;
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+label > span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-weight: 300;
+  line-height: 32px;
+  color: #8798AB;
+  border-bottom: 1px solid #586A82;
+  transition: border-bottom-color 200ms ease-in-out;
+  cursor: text;
+}
+
+label > span span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0% 50%;
+  transition: transform 200ms ease-in-out;
+  cursor: text;
+}
+
+label .field.is-focused + span,
+label .field:not(.is-empty) + span {
+  pointer-events: none;
+}
+
+label .field.is-focused + span span,
+label .field:not(.is-empty) + span span {
+  transform: scale(0.68) translateY(-36px);
+  cursor: default;
+}
+
+label .field.is-focused + span {
+  border-bottom-color: #34D08C;
+}
+
+.field {
+  background: transparent;
+  font-weight: 300;
+  border: 0;
+  color: black;
+  outline: none;
+  cursor: text;
+  display: block;
+  width: 100%;
+  line-height: 32px;
+  padding-bottom: 3px;
+  transition: opacity 200ms ease-in-out;
+}
+
+.field::-webkit-input-placeholder { color: #8898AA; }
+.field::-moz-placeholder { color: #8898AA; }
+
+.field.is-empty:not(.is-focused) {
+  opacity: 0;
+}
+
+
+
+.outcome {
+  float: left;
+  width: 100%;
+  padding-top: 8px;
+  min-height: 20px;
+  text-align: center;
+}
+
+.success, .error {
+  display: none;
+  font-size: 15px;
+}
+
+.success.visible, .error.visible {
+  display: inline;
+}
+
+.error {
+  color: #E4584C;
+}
+
+.success {
+  color: #34D08C;
+}
+
+.success .token {
+  font-weight: 500;
+  font-size: 15px;
+}
+</style>
+
+<script type="text/javascript">
+var stripe = Stripe("<%= Rails.configuration.stripe[:publishable_key] %>");
+var elements = stripe.elements();
+
+var card = elements.create('card', {
+  iconStyle: 'solid',
+  style: {
+    base: {
+      iconColor: '#8898AA',
+      color: 'black',
+      lineHeight: '36px',
+      fontWeight: 300,
+      fontFamily: 'Helvetica Neue',
+      fontSize: '19px',
+
+      '::placeholder': {
+        color: '#8898AA',
+      },
+    },
+    invalid: {
+      iconColor: '#e85746',
+      color: '#e85746',
+    }
+  },
+  classes: {
+    focus: 'is-focused',
+    empty: 'is-empty',
+  },
+});
+card.mount('#card-element');
+
+var inputs = Array.from(document.querySelectorAll('input.field'));
+inputs.forEach(function(input) {
+  input.addEventListener('focus', function() {
+    input.classList.add('is-focused');
+  });
+  input.addEventListener('blur', function() {
+    input.classList.remove('is-focused');
+  });
+  input.addEventListener('keyup', function() {
+    if (input.value.length === 0) {
+      input.classList.add('is-empty');
+    } else {
+      input.classList.remove('is-empty');
+    }
+  });
+});
+
+function poll(guid, num_retries_left) {
+  var errorElement = document.querySelector('.error');
+  if (num_retries_left == 0) {
+    errorElement.textContent = "This seems to be taking too long. Email help@elucidaid.com and reference transaction:" +  guid + " and we'll take a look.";
+    errorElement.classList.add('visible');
+    return; 
+  }
+  $.get("/sub_status/" + guid, function(data) {
+    if (data.status === "finished") {
+      window.location = "/pickup/" + guid;
+    } else if (data.status === "error") {
+      errorElement.textContent = data.error;
+      errorElement.classList.add('visible');
+    }
+    else{
+      setTimeout(function() { poll(guid, num_retries_left - 1) }, 500);
+    }
+  }); 
+}
+
+function setOutcome(result) {
+  var errorElement = document.querySelector('.error');
+  errorElement.classList.remove('visible');
+  var form = document.querySelector('form');
+  if (result.token) {
+    // Use the token to create a charge or a customer
+    // https://stripe.com/docs/charges
+    form.append($('<input type="hidden" name="stripeToken">').val(result.token.id));
+    $.ajax({
+        type: "POST",
+        url: "/subscriptions",
+        data: $('#payment-form').serialize(),
+        success: function(data) {
+          poll(data.guid, 30);
+        },
+        error: function(data) { 
+          errorElement.textContent = data.responseJSON.error;
+          errorElement.classList.add('visible');
+          form.querySelector('button[name=submit]').removeAttribute('disabled');
+        }
+    });
+  } else if (result.error) {
+    errorElement.textContent = result.error.message;
+    errorElement.classList.add('visible');
+    form.querySelector('button[name=submit]').removeAttribute('disabled');
+  }
+}
+
+card.on('change', function(event) {
+  setOutcome(event);
+});
+
+document.querySelector('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var form = document.querySelector('form');
+  form.querySelector('button[name=submit]').disabled = true;
+  var extraDetails = {
+    name: form.querySelector('input[name=cardholder-name]').value,
+  };
+  stripe.createToken(card, extraDetails).then(setOutcome);
+});
+</script>

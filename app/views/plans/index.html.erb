@@ -1,0 +1,51 @@
+
+<div class="row">
+<div class="col-md-7  col-centered" style="float: none; margin: 0 auto;">
+
+<h1>Plans</h1>
+
+</div>
+</div>
+<div class="row">
+<div class="col-md-7  col-centered" style="float: none; margin: 0 auto;">
+
+<div class="well">
+
+<p id="notice"><%= notice %></p>
+
+
+
+<table class="table table-striped">
+  <thead class="thead-inverse">
+    <tr>
+      <th>amount</th>
+      <th>interval</th>
+      <th>name</th>
+      <th>product</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @plans.each do |plan| %>
+      <tr>
+        <td><%= plan.amount %></td>
+        <td><%= plan.interval %></td>
+        <td><%= plan.name %></td>
+        <td><%= plan.product.name %></td>
+        <td><%= link_to 'Show', plan %></td>
+        <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
+        <td><%= link_to 'Destroy', plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Plan', new_plan_path %>
+</div>
+</div>
+</div>

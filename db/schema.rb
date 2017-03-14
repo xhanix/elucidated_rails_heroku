@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170312201252) do
+ActiveRecord::Schema.define(version: 20170314220244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "invoice_payments", force: :cascade do |t|
+    t.string   "stripe_id"
+    t.integer  "amount"
+    t.integer  "fee_amount"
+    t.integer  "user_id"
+    t.integer  "subscription_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["subscription_id"], name: "index_invoice_payments_on_subscription_id", using: :btree
+    t.index ["user_id"], name: "index_invoice_payments_on_user_id", using: :btree
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string   "stripe_id"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "amount"
+    t.string   "interval"
+    t.boolean  "published"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "product_id"
+    t.integer  "trial_period_days"
+    t.index ["product_id"], name: "index_plans_on_product_id", using: :btree
+  end
 
   create_table "products", force: :cascade do |t|
     t.string   "name"
@@ -50,6 +76,27 @@ ActiveRecord::Schema.define(version: 20170312201252) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "plan_id"
+    t.string   "stripe_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "guid"
+    t.string   "state"
+    t.text     "error"
+    t.index ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
+    t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "stripe_customer_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "email"
+    t.string   "guid"
+  end
+
   create_table "versions", force: :cascade do |t|
     t.string   "item_type",      null: false
     t.integer  "item_id",        null: false
@@ -61,5 +108,10 @@ ActiveRecord::Schema.define(version: 20170312201252) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
+  add_foreign_key "invoice_payments", "subscriptions"
+  add_foreign_key "invoice_payments", "users"
+  add_foreign_key "plans", "products"
   add_foreign_key "sales", "products"
+  add_foreign_key "subscriptions", "plans"
+  add_foreign_key "subscriptions", "users"
 end

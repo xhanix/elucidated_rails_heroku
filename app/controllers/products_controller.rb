@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  def name
+    "#{name.first}"
+  end
   # GET /products
   # GET /products.json
   def index

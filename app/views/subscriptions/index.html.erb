@@ -1,0 +1,4 @@
+<% @subscription.each do |subscription| %>
+  <%= link_to "#{plan.name} (#{formatted_price(plan.amount)})",
+        new_subscription_path(plan_id: plan.id) %>
+<% end %>

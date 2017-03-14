@@ -81,3 +81,27 @@ STATEMENT:                SELECT a.attname, format_type(a.atttypid, a.atttypmod)
 	                 AND a.attnum > 0 AND NOT a.attisdropped
 	               ORDER BY a.attnum
 	
+ERROR:  relation "users" does not exist
+STATEMENT:  CREATE TABLE "subscriptions" ("id" serial primary key, "user_id" integer, "plan_id" integer, "stripe_id" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_933bdff476"
+	FOREIGN KEY ("user_id")
+	  REFERENCES "users" ("id")
+	, CONSTRAINT "fk_rails_63d3df128b"
+	FOREIGN KEY ("plan_id")
+	  REFERENCES "plans" ("id")
+	)
+ERROR:  relation "users" does not exist
+STATEMENT:  CREATE TABLE "subscriptions" ("id" serial primary key, "user_id" integer, "plan_id" integer, "stripe_id" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_933bdff476"
+	FOREIGN KEY ("user_id")
+	  REFERENCES "users" ("id")
+	, CONSTRAINT "fk_rails_63d3df128b"
+	FOREIGN KEY ("plan_id")
+	  REFERENCES "plans" ("id")
+	)
+ERROR:  cached plan must not change result type
+STATEMENT:  SELECT  "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."guid" = $1 LIMIT $2
+ERROR:  cached plan must not change result type
+STATEMENT:  SELECT  "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT $2
+ERROR:  cached plan must not change result type
+STATEMENT:  SELECT  "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."guid" = $1 LIMIT $2
+ERROR:  cached plan must not change result type
+STATEMENT:  SELECT  "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT $2
