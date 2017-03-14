@@ -25,12 +25,12 @@ class TransactionsController < ApplicationController
 
 		token = params[:stripeToken]
 		puts "**********************"+product.price.to_s+"*******************"
-		sale = Sale.new do |s|
-			s.amount = 14999,
-			s.product_id = product.id,
-			s.stripe_token = token,
-			s.email = params[:email]
-		end
+		sale = Sale.new
+			sale.amount = 14999
+			sale.product_id = product.id
+			sale.stripe_token = token
+			sale.email = params[:email]
+		
 
 		if sale.save
 			StripeChargerWorker.perform_async(sale.guid)
