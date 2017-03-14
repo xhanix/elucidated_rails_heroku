@@ -24,7 +24,7 @@ class TransactionsController < ApplicationController
 			)
 
 		token = params[:stripeToken]
-
+		puts "**********************"+product.price.to_s+"*******************"
 		sale = Sale.new do |s|
 			s.amount = product.price,
 			s.product_id = product.id,
