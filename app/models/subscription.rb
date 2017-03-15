@@ -37,15 +37,16 @@ class Subscription < ApplicationRecord
 	def subscribe_customer
 		user = self.user
 		plan = self.plan
-		puts "**********" + plan.name
+		source = self.stripe_id
 		begin
 			stripe_sub = nil
 			save!
 			if user.stripe_customer_id.blank?
         		customer = Stripe::Customer.create(
-          		source: self.stripe_id,
+          		source: source,
           		email: user.email,
           		plan: plan.stripe_id,
+          		description: user.description
         		)
         		user.stripe_customer_id = customer.id
         		user.save!

@@ -6,18 +6,17 @@ end
 
 
 StripeEvent.configure do |events|
+
 	events.subscribe 'charge.dispute.created' do |event|
 		StripeMailer.admin_dispute_created(event.data.object).deliver
 	end 
+  
 	events.subscribe 'charge.succeeded' do |event|
 		charge = event.data.object
 		StripeMailer.receipt(charge).deliver
 		StripeMailer.admin_charge_succeeded(charge).deliver
 	end
-end
 
-
-StripeEvent.configure do |events|
   events.subscribe('invoice.payment_succeeded') do |event|
     invoice = event.data.object
     user = User.find_by(stripe_id: invoice.customer)

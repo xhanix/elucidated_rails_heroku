@@ -105,3 +105,7 @@ ERROR:  cached plan must not change result type
 STATEMENT:  SELECT  "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."guid" = $1 LIMIT $2
 ERROR:  cached plan must not change result type
 STATEMENT:  SELECT  "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."id" = $1 LIMIT $2
+ERROR:  cached plan must not change result type
+STATEMENT:  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2
+ERROR:  cached plan must not change result type
+STATEMENT:  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2

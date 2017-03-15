@@ -1,259 +1,302 @@
 <% unless @subscription.errors.blank? %>
-  <%= @subscription.errors.full_messages.to_sentence %>
+<%= @subscription.errors.full_messages.to_sentence %>
 <% end %>
-
-<h2>Subscribing to <%= @plan.name %></h2>
-
+<div class="row">
+  <div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 500px;">
+ <img src=<%= image_url("screenshot_elucidaid_01.png") %> class=".img-fluid" style="max-width: 100%;" alt="Responsive image">
+    <hr class="my-4">
+</div>
+</div>
+<div class="row">
+  <div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 400px;">
+  <p class="lead text-center ">Start Creating Your Lab Notes Today!</p>
+<p class="lead text-center">Enjoy eLucidaid with Free Trial.</p>
+</div>
+</div>
 <!-- end header content -->
 <div class="row">
-<div class="col-xs-8 col-sm-6 col-lg-4 col-md-5  col-centered" style="float: none; margin: 0 auto;">
-<div class="well">
-<%= form_tag subscriptions_path, :class => '', :id => 'subscribe-form' do %>
- 
-    <input type="hidden" class="field is-empty" name="plan_id" value=<%= @plan.id %> />
-    <label>
-      <input name="cardholder-name" class="field is-empty" placeholder="" />
-      <span><span>Name</span></span>
-    </label>
-    <label>
-      <input name="email" class="field is-empty" placeholder="" type="email" />
-      <span><span>Email</span></span>
-    </label>
-    <label>
-      <div id="card-element" class="field is-empty"></div>
-      <span><span>Card Number</span></span>
-    </label>
-    <button class="btn btn-block btn-primary" type="submit" name="submit">Subscribe $149.99/YR</button>
-    <div class="outcome">
-      <div class="error"></div>
+  <div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 400px;">
+    <div class="well">
+
+      <%= form_tag subscriptions_path, :class => 'card-form', :id => 'subscribe-form' do %>
+
+      <input type="hidden" class="field is-empty" name="plan_id" value=<%= @plan.id %> />
+      <label>
+        <input name="cardholder-name" class="field is-empty" placeholder="" />
+        <span><span>Name</span></span>
+      </label>
+      <label>
+        <input name="email" class="field is-empty" placeholder="" type="email" />
+        <span><span>Email</span></span>
+      </label>
+      <label>
+        <div id="card-element" class="field is-empty"></div>
+        <span><span>Card Number</span></span>
+      </label>
+      <div class="loader col-centered" id='loader'></div>
+      <button class="btn btn-block btn-success" type="submit" name="submit">Subscribe Now!</button>
+      <div class="outcome">
+
+        <div class="error"></div>
+      </div></br></br>
+      <% end %>
     </div>
-  <% end %>
   </div>
+</div>
+<div class="row">
+  <div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 400px;">
+  <p>1- Annual license fee: $149.99</p>
+  <p>2- Payments are processed after the '7 Day Trial' period.</p>
+  <p>3- Charge NOT applied if you cancel within 7 days.</p>
+   <hr class="my-4">
+<p class="text-success">Need assistance? Contact us: </p><p><a href="mailto:help@elucidaid.com">help@elucidaid.com</a></p><p> Phone: +1 (302) 250-4868</p></br>
 </div>
 </div>
 <style type="text/css">
-  
-  * {
-  font-family: "Helvetica Neue", Helvetica;
-  font-size: 19px;
-  font-variant: normal;
-  padding: 0;
-  margin: 0;
+.loader {
+    border-bottom: 6px solid white; /* Light grey */
+    border-left: 6px solid #3498db;
+    border-right: 6px solid #3498db;
+    border-top: 6px solid white; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    float: none; 
+    margin: 0 auto;
+    margin-bottom: -50px;
 }
 
-
-
-label {
-  position: relative;
-  color: #8798AB;
-  display: block;
-  margin-top: 30px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column-reverse;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
-
-label > span {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  font-weight: 300;
-  line-height: 32px;
-  color: #8798AB;
-  border-bottom: 1px solid #586A82;
-  transition: border-bottom-color 200ms ease-in-out;
-  cursor: text;
-}
-
-label > span span {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform-origin: 0% 50%;
-  transition: transform 200ms ease-in-out;
-  cursor: text;
-}
-
-label .field.is-focused + span,
-label .field:not(.is-empty) + span {
-  pointer-events: none;
-}
-
-label .field.is-focused + span span,
-label .field:not(.is-empty) + span span {
-  transform: scale(0.68) translateY(-36px);
-  cursor: default;
-}
-
-label .field.is-focused + span {
-  border-bottom-color: #34D08C;
-}
-
-.field {
-  background: transparent;
-  font-weight: 300;
-  border: 0;
-  color: black;
-  outline: none;
-  cursor: text;
-  display: block;
-  width: 100%;
-  line-height: 32px;
-  padding-bottom: 3px;
-  transition: opacity 200ms ease-in-out;
-}
-
-.field::-webkit-input-placeholder { color: #8898AA; }
-.field::-moz-placeholder { color: #8898AA; }
-
-.field.is-empty:not(.is-focused) {
-  opacity: 0;
-}
+  .card-form {
+    font-family: "Helvetica Neue", Helvetica;
+    font-size: 19px;
+    font-variant: normal;
+    padding: 0;
+    margin: 0;
+  }
 
 
 
-.outcome {
-  float: left;
-  width: 100%;
-  padding-top: 8px;
-  min-height: 20px;
-  text-align: center;
-}
+  label {
+    position: relative;
+    color: #8798AB;
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
 
-.success, .error {
-  display: none;
-  font-size: 15px;
-}
+  label > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-weight: 300;
+    line-height: 32px;
+    color: #8798AB;
+    border-bottom: 1px solid #586A82;
+    transition: border-bottom-color 200ms ease-in-out;
+    cursor: text;
+  }
 
-.success.visible, .error.visible {
-  display: inline;
-}
+  label > span span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: 0% 50%;
+    transition: transform 200ms ease-in-out;
+    cursor: text;
+  }
 
-.error {
-  color: #E4584C;
-}
+  label .field.is-focused + span,
+  label .field:not(.is-empty) + span {
+    pointer-events: none;
+  }
 
-.success {
-  color: #34D08C;
-}
+  label .field.is-focused + span span,
+  label .field:not(.is-empty) + span span {
+    transform: scale(0.68) translateY(-36px);
+    cursor: default;
+  }
 
-.success .token {
-  font-weight: 500;
-  font-size: 15px;
-}
+  label .field.is-focused + span {
+    border-bottom-color: #34D08C;
+  }
+
+  .field {
+    background: transparent;
+    font-weight: 300;
+    border: 0;
+    color: black;
+    outline: none;
+    cursor: text;
+    display: block;
+    width: 100%;
+    line-height: 32px;
+    padding-bottom: 3px;
+    transition: opacity 200ms ease-in-out;
+  }
+
+  .field::-webkit-input-placeholder { color: #8898AA; }
+  .field::-moz-placeholder { color: #8898AA; }
+
+  .field.is-empty:not(.is-focused) {
+    opacity: 0;
+  }
+
+
+
+  .outcome {
+    float: left;
+    width: 100%;
+    padding-top: 8px;
+    min-height: 20px;
+    text-align: center;
+  }
+
+  .success, .error {
+    display: none;
+    font-size: 15px;
+  }
+
+  .success.visible, .error.visible {
+    display: inline;
+  }
+
+  .error {
+    color: #E4584C;
+  }
+
+  .success {
+    color: #34D08C;
+  }
+
+  .success .token {
+    font-weight: 500;
+    font-size: 15px;
+  }
 </style>
 
 <script type="text/javascript">
-var stripe = Stripe("<%= Rails.configuration.stripe[:publishable_key] %>");
-var elements = stripe.elements();
+$('.loader').hide();
+  var stripe = Stripe("<%= Rails.configuration.stripe[:publishable_key] %>");
+  var elements = stripe.elements();
 
-var card = elements.create('card', {
-  iconStyle: 'solid',
-  style: {
-    base: {
-      iconColor: '#8898AA',
-      color: 'black',
-      lineHeight: '36px',
-      fontWeight: 300,
-      fontFamily: 'Helvetica Neue',
-      fontSize: '19px',
+  var card = elements.create('card', {
+    iconStyle: 'solid',
+    style: {
+      base: {
+        iconColor: '#8898AA',
+        color: 'black',
+        lineHeight: '36px',
+        fontWeight: 300,
+        fontFamily: 'Helvetica Neue',
+        fontSize: '19px',
 
-      '::placeholder': {
-        color: '#8898AA',
+        '::placeholder': {
+          color: '#8898AA',
+        },
       },
+      invalid: {
+        iconColor: '#e85746',
+        color: '#e85746',
+      }
     },
-    invalid: {
-      iconColor: '#e85746',
-      color: '#e85746',
-    }
-  },
-  classes: {
-    focus: 'is-focused',
-    empty: 'is-empty',
-  },
-});
-card.mount('#card-element');
+    classes: {
+      focus: 'is-focused',
+      empty: 'is-empty',
+    },
+  });
+  card.mount('#card-element');
 
-var inputs = Array.from(document.querySelectorAll('input.field'));
-inputs.forEach(function(input) {
-  input.addEventListener('focus', function() {
-    input.classList.add('is-focused');
+  var inputs = Array.from(document.querySelectorAll('input.field'));
+  inputs.forEach(function(input) {
+    input.addEventListener('focus', function() {
+      input.classList.add('is-focused');
+    });
+    input.addEventListener('blur', function() {
+      input.classList.remove('is-focused');
+    });
+    input.addEventListener('keyup', function() {
+      if (input.value.length === 0) {
+        input.classList.add('is-empty');
+      } else {
+        input.classList.remove('is-empty');
+      }
+    });
   });
-  input.addEventListener('blur', function() {
-    input.classList.remove('is-focused');
-  });
-  input.addEventListener('keyup', function() {
-    if (input.value.length === 0) {
-      input.classList.add('is-empty');
-    } else {
-      input.classList.remove('is-empty');
-    }
-  });
-});
 
-function poll(guid, num_retries_left) {
-  var errorElement = document.querySelector('.error');
-  if (num_retries_left == 0) {
-    errorElement.textContent = "This seems to be taking too long. Email help@elucidaid.com and reference transaction:" +  guid + " and we'll take a look.";
-    errorElement.classList.add('visible');
-    return; 
-  }
-  $.get("/sub_status/" + guid, function(data) {
-    if (data.status === "finished") {
-      window.location = "/pickup/" + guid;
-    } else if (data.status === "error") {
-      errorElement.textContent = data.error;
+  function poll(guid, num_retries_left) {
+    var errorElement = document.querySelector('.error');
+    if (num_retries_left == 0) {
+      errorElement.textContent = "This seems to be taking too long. Email help@elucidaid.com with reference: " +  guid + "  We'll take a look.";
       errorElement.classList.add('visible');
+      return; 
     }
-    else{
-      setTimeout(function() { poll(guid, num_retries_left - 1) }, 500);
-    }
-  }); 
-}
+    $.get("/sub_status/" + guid, function(data) {
+      if (data.status === "finished") {
+        window.location = "/download_app/" + guid;
+      } else if (data.status === "error") {
+        errorElement.textContent = data.error;
+        errorElement.classList.add('visible');
+        form.querySelector('button[name=submit]').removeAttribute('disabled');
+        $('.loader').hide();
+      }
+      else{
+        setTimeout(function() { poll(guid, num_retries_left - 1) }, 500);
+      }
+    }); 
+  }
 
-function setOutcome(result) {
-  var errorElement = document.querySelector('.error');
-  errorElement.classList.remove('visible');
-  var form = document.querySelector('form');
-  if (result.token) {
+ 
 
+  document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = document.querySelector('form');
+    var loader = document.querySelector('.loader');
+    form.querySelector('button[name=submit]').disabled = true;
+    $('.loader').show();
+    var extraDetails = {
+      name: form.querySelector('input[name=cardholder-name]').value,
+    };
+    var promise = stripe.createToken(card, extraDetails);
+    promise.then(function(result){
+      var errorElement = document.querySelector('.error');
+      errorElement.classList.remove('visible');
+      var form = document.querySelector('form');
+      if (result.token) {
+        var token = result.token.id;
     // Use the token to create a charge or a customer
     // https://stripe.com/docs/charges
-    form.append($('<input type="hidden" name="stripeToken">').val(result.token.id));
-    alert($('#subscribe-form').serialize());
+    var input = $("<input>").attr("type", "hidden").attr("name", "stripeToken").val(token);
+    $('#subscribe-form').append($(input));
+    //form.append($('<input type="hidden" name="stripeToken">').val(token));
     $.ajax({
-        type: "POST",
-        url: "/subscriptions",
-        data: $('#subscribe-form').serialize(),
-        success: function(data) {
-          poll(data.guid, 30);
-        },
-        error: function(data) { 
-          errorElement.textContent = data.responseJSON.error;
-          errorElement.classList.add('visible');
-          form.querySelector('button[name=submit]').removeAttribute('disabled');
-        }
+      type: "POST",
+      url: "/subscriptions",
+      data: $('#subscribe-form').serialize(),
+      success: function(data) {
+        poll(data.guid, 30);
+      },
+      error: function(data) { 
+        errorElement.textContent = data.responseJSON.error;
+        errorElement.classList.add('visible');
+        form.querySelector('button[name=submit]').removeAttribute('disabled');
+        $('.loader').hide();
+      }
     });
   } else if (result.error) {
     errorElement.textContent = result.error.message;
     errorElement.classList.add('visible');
     form.querySelector('button[name=submit]').removeAttribute('disabled');
+    $('.loader').hide();
   }
-}
-
-card.on('change', function(event) {
-  setOutcome(event);
 });
-
-document.querySelector('form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  var form = document.querySelector('form');
-  form.querySelector('button[name=submit]').disabled = true;
-  var extraDetails = {
-    name: form.querySelector('input[name=cardholder-name]').value,
-  };
-  stripe.createToken(card, extraDetails).then(setOutcome);
-});
+  });
 </script>

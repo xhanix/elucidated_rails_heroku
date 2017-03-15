@@ -1,4 +1,44 @@
-<% @subscription.each do |subscription| %>
-  <%= link_to "#{plan.name} (#{formatted_price(plan.amount)})",
-        new_subscription_path(plan_id: plan.id) %>
+<% if authuser_signed_in? %>
+<div class="row">
+<div class="col-md-8  col-centered" style="float: none; margin: 0 auto;">
+<h1>Subscriptions</h1>
+</div>
+</div>
+<div class="row">
+<div class="col-md-8  col-centered" style="float: none; margin: 0 auto;">
+<div class="well">
+<p id="notice"><%= notice %></p>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Plan name</th>
+      <th>User email</th>
+      <th>Subscription Date</th>
+      <th>Plan interval</th>
+      <th colspan="6"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @subscription.each do |subscription| %>
+      <tr>
+        <td><%= subscription.plan.name %></td>
+        <td><%= link_to subscription.user.email, "https://manage.stripe.com/customers/#{subscription.user.stripe_customer_id}" %></td>
+        <td><%= subscription.created_at %></td>
+        <td><%= subscription.plan.interval %></td>
+     
+        <td><%= link_to 'Edit', edit_subscription_path(subscription) %></td>
+        <td><%= link_to 'Destroy', subscription, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Plan', new_plan_path, class: 'btn btn-primary' %>
+</div>
+</div>
 <% end %>

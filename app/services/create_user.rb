@@ -1,5 +1,5 @@
 class CreateUser
-  def self.call(email_address)
+  def self.call(email_address, key)
 
     user = User.find_by(email: email_address)
 
@@ -9,7 +9,8 @@ class CreateUser
     user = User.create!(
       email: email_address,
     )
-
+    user.description = key
+    user.save
     return user
   end
 end

@@ -42,6 +42,8 @@ gem 'paper_trail'
 gem 'stripe_event'
 gem 'docverter'
 gem 'sidekiq'
+gem 'devise'
+gem "attr_encrypted", "~> 3.0.0"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'rails_12factor', group: :production

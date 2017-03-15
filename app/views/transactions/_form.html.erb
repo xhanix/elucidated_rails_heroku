@@ -16,7 +16,7 @@
       <div id="card-element" class="field is-empty"></div>
       <span><span>Card Number</span></span>
     </label>
-    <button class="btn btn-block btn-primary" type="submit">Subscribe $149.99/YR</button>
+    <button class="btn btn-block btn-primary" type="submit">Subscribe</button>
     <div class="outcome">
       <div class="error"></div>
     </div>
@@ -209,14 +209,14 @@ function poll(guid, num_retries_left) {
 function setOutcome(result) {
   var errorElement = document.querySelector('.error');
   errorElement.classList.remove('visible');
-  
+
   if (result.token) {
     // Use the token to create a charge or a customer
     // https://stripe.com/docs/charges
 
     var form = $('#payment-form');
     form.append($('<input type="hidden" name="stripeToken">').val(result.token.id));
-    
+    alert(result.token)
     $.ajax({
         type: "POST",
         url: "/buy/<%= permalink %>",

@@ -1,0 +1,20 @@
+<div class="row">
+<div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 600px;">
+<h1 style="font-size: 68px;" class="lead">Thank You!</h1>
+ <hr class="my-4">
+<p class="lead">1- Click below to download eLucidaid.</p>
+<a href="<%= app_download_url(guid: @subscription.guid) %>" type="button" class="btn btn-primary btn-sm" style="color: white;margin-left: 30px;"><span class="lead">Download</span></a>
+</br></br></br>
+
+<p class="lead">2- Use your license key to activate eLucidaid.</p>
+<div class="well" style="width: 450px;margin-left: 30px;">
+<% if flash[:key] %>
+<p class="lead text-success text-center" style="font-size: 18px;">License key: <%= flash[:key] %> </p>
+<% else %>
+<p class="lead text-success text-center" style="font-size: 18px;">Please check emailed receipt.</p>
+<% end %>
+</div>
+</br></br></br>
+<p class="lead">3- Enjoy!</p>
+</div>
+</div>

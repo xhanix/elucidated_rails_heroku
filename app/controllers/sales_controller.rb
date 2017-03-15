@@ -1,6 +1,6 @@
 class SalesController < ApplicationController
   before_action :set_sale, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_authuser!, only: [:show, :edit, :update, :destroy,:index]
   # GET /sales
   # GET /sales.json
   def index

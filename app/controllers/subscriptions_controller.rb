@@ -1,9 +1,10 @@
 class SubscriptionsController < ApplicationController
-
+  protect_from_forgery with: :exception
   before_action :load_subscription
+  before_action :authenticate_authuser!, only: [:show, :edit, :update, :destroy,:index]
 
   def index
-    @subscription = Plan.all
+    @subscription = Subscription.all
   end
 
   def show
@@ -18,22 +19,21 @@ class SubscriptionsController < ApplicationController
     plan = Plan.find(params[:plan_id])
     token = params[:stripeToken]
     email = params[:email]
-    user = CreateUser.call(email)
+    @key = SecureRandom.hex(12)
+    user = CreateUser.call(email,@key)
     subscription = Subscription.new(
       plan: plan,
       user: user,
       stripe_id: token
     )
     if subscription.save
-      puts "********** TOKEN:"
-      puts "********** TOKEN:"+subscription.plan.name+"********************"
-      puts "********** TOKEN:"
       StripeSubscriberWorker.perform_async(subscription.guid)
       render json: { guid: subscription.guid }
     else
       errors = subscription.errors.full_messages
       render json: {error: errors.join(" ")}, status: 400
     end
+    flash[:key] = @key
   end
 
   def status
@@ -42,12 +42,13 @@ class SubscriptionsController < ApplicationController
   end
 
   def pickup
-    @subscription = subscription.find_by!(guid: params[:guid])
+    @subscription = Subscription.find_by!(guid: params[:guid])
     @product = @subscription.plan.product
+
   end
 
   def download
-    @subscription = subscription.find_by!(guid: params[:guid])
+    @subscription = Subscription.find_by!(guid: params[:guid])
     resp = HTTParty.get(@subscription.plan.product.file.url)
     filename = @subscription.plan.product.file.url
     send_data resp.body,
