@@ -8,9 +8,9 @@ class CreateUser
 
     user = User.create!(
       email: email_address,
-      fullname: name,
     )
     user.description = key
+    user.fullname = name
     user.save
     return user
   end
