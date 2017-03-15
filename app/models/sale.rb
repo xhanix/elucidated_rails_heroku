@@ -20,7 +20,7 @@ class Sale < ApplicationRecord
 		end
 	end
 
-	
+	belongs_to :product
 	before_save :populate_guid
 	validates_uniqueness_of :guid
 
