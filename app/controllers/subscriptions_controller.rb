@@ -26,7 +26,7 @@ class SubscriptionsController < ApplicationController
     )
     if subscription.save
       puts "********** TOKEN:"
-      puts "********** TOKEN:"+subscription.stripe_id+"********************"
+      puts "********** TOKEN:"+subscription.plan.name+"********************"
       puts "********** TOKEN:"
       StripeSubscriberWorker.perform_async(subscription.guid)
       render json: { guid: subscription.guid }

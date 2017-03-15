@@ -209,12 +209,14 @@ function poll(guid, num_retries_left) {
 function setOutcome(result) {
   var errorElement = document.querySelector('.error');
   errorElement.classList.remove('visible');
+  
   if (result.token) {
     // Use the token to create a charge or a customer
     // https://stripe.com/docs/charges
+
     var form = $('#payment-form');
     form.append($('<input type="hidden" name="stripeToken">').val(result.token.id));
-    alert($('#payment-form').serialize());
+    
     $.ajax({
         type: "POST",
         url: "/buy/<%= permalink %>",

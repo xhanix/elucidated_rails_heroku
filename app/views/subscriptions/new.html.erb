@@ -8,8 +8,9 @@
 <div class="row">
 <div class="col-xs-8 col-sm-6 col-lg-4 col-md-5  col-centered" style="float: none; margin: 0 auto;">
 <div class="well">
-  <%= form_for @subscription, html: { id: 'payment-form' } do |f| %>
-    <input type="hidden" name="plan_id" value="<%= @plan.id %>" />
+<%= form_tag subscriptions_path, :class => '', :id => 'subscribe-form' do %>
+ 
+    <input type="hidden" class="field is-empty" name="plan_id" value=<%= @plan.id %> />
     <label>
       <input name="cardholder-name" class="field is-empty" placeholder="" />
       <span><span>Name</span></span>
@@ -217,13 +218,15 @@ function setOutcome(result) {
   errorElement.classList.remove('visible');
   var form = document.querySelector('form');
   if (result.token) {
+
     // Use the token to create a charge or a customer
     // https://stripe.com/docs/charges
     form.append($('<input type="hidden" name="stripeToken">').val(result.token.id));
+    alert($('#subscribe-form').serialize());
     $.ajax({
         type: "POST",
         url: "/subscriptions",
-        data: $('#payment-form').serialize(),
+        data: $('#subscribe-form').serialize(),
         success: function(data) {
           poll(data.guid, 30);
         },
