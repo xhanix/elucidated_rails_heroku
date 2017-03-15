@@ -37,7 +37,7 @@ class Subscription < ApplicationRecord
 	def subscribe_customer
 		user = self.user
 		plan = self.plan
-		puts "********** TOKEN:"+self.stripe_id+"********************"
+		puts "**********  Subscribe customer ********************"
 		begin
 			stripe_sub = nil
 			save!
