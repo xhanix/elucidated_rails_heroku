@@ -13,20 +13,16 @@ StripeEvent.configure do |events|
   
 	events.subscribe 'charge.succeeded' do |event|
 		charge = event.data.object
-		StripeMailer.receipt(charge).deliver
-		StripeMailer.admin_charge_succeeded(charge).deliver
 	end
 
   events.subscribe('invoice.payment_succeeded') do |event|
     invoice = event.data.object
-    user = User.find_by(stripe_id: invoice.customer)
+    user = User.find_by(stripe_customer_id: invoice.customer)
     invoice_sub = invoice.lines.data.select { |i| i.type == 'subscription' }.first.id
     subscription = Subscription.find_by(stripe_id: invoice_sub)
-
     charge = invoice.charge
-
     balance_txn = Stripe::BalanceTransaction.retrieve(charge.balance_transaction)
-
+    card =  invoice.customer.sources.retrieve(charge.sources.id)
     InvoicePayment.create(
       stripe_id: invoice.id,
       amount: invoice.total,
@@ -34,5 +30,7 @@ StripeEvent.configure do |events|
       user_id: user.id,
       subscription_id: subscription.id
     )
+    StripeMailer.receipt(invoice,card).deliver
+    StripeMailer.admin_invoice_succeeded(invoice).deliver
   end
 end

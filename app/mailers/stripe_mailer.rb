@@ -1,5 +1,5 @@
 class StripeMailer < ActionMailer::Base
-	default from: 'you@example.com'
+	default from: 'help@elucidaid.com'
 	def admin_dispute_created(charge)
 		@charge = charge
 		@sale = Sale.find_by(stripe_id: @charge.id)
@@ -7,15 +7,25 @@ class StripeMailer < ActionMailer::Base
 			mail(to: 'hani@aiderbotics.com', subject: "Dispute created on charge #{@sale.guid} (#{charge.id})").deliver
 		end 
 	end
-	def admin_charge_succeeded(charge)
-		@charge = charge
+
+	def admin_invoice_succeeded(invoice)
+		@invoice = invoice
+		@user = User.find_by(stripe_customer_id: invoice.customer)
 		mail(to: 'hani@aiderbotics.com', subject: 'Woo! Charge Succeeded!')
 	end
 
-	def receipt(charge)
-		@charge = charge
-		@sale = Sale.find_by!(stripe_id: @charge.id)
-		mail(to: @sale.email, subject: "Thanks for purchasing #{@sale.product.name}")
+	def receipt(invoice,card)
+		@invoice = invoice
+		@card = card
+		@user = User.find_by(stripe_customer_id: invoice.customer)
+		html = render_to_string('stripe_mailer/receipt.html')
+		pdf = Docverter::Conversion.run do |c|
+			c.from = 'html'
+			c.to = 'pdf'
+			c.content = html
+		end
+		attachments['Invoice.pdf'] = pdf
+		mail(to: @sale.email, subject: "Your eLucidaid Purchase Receipt")
 	end
 	
 end
