@@ -26,7 +26,7 @@ class StripeMailer < ActionMailer::Base
 			c.content = html
 		end
 		attachments['Invoice.pdf'] = pdf
-		mail(to: @sale.email, subject: "Your eLucidaid Purchase Receipt")
+		mail(to: @user.email, subject: "Your eLucidaid Purchase Receipt")
 	end
 	
 end
