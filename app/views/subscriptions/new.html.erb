@@ -277,7 +277,6 @@ $('.loader').hide();
     var input = $("<input>").attr("type", "hidden").attr("name", "stripeToken").val(token);
     $('#subscribe-form').append($(input));
     //form.append($('<input type="hidden" name="stripeToken">').val(token));
-    alert($('#subscribe-form').serialize())
     $.ajax({
       type: "POST",
       url: "/subscriptions",
