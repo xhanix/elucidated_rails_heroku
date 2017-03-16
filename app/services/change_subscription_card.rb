@@ -4,7 +4,6 @@ class ChangeSubscriptionCard
       user = subscription.user
       customer = Stripe::Customer.retrieve(user.stripe_customer_id)
       stripe_sub = customer.subscriptions.retrieve(subscription.stripe_id)
-
       stripe_sub.source = token
       stripe_sub.save!
     rescue Stripe::StripeError => e

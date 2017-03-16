@@ -5,7 +5,6 @@ class ChangePlan
       user = subscription.user
       customer = Stripe::Customer.retrieve(user.stripe_customer_id)
       stripe_sub = customer.subscriptions.retrieve(subscription.stripe_id)
-
       stripe_sub.plan = to_plan.stripe_id
       stripe_sub.save
       subscription.plan = to_plan

@@ -22,7 +22,8 @@ StripeEvent.configure do |events|
     subscription = Subscription.find_by(stripe_id: invoice_sub)
     charge = Stripe::Charge.retrieve(invoice.charge)
     balance_txn = Stripe::BalanceTransaction.retrieve(charge.balance_transaction)
-    card =  invoice.customer.sources.retrieve(charge.sources.id)
+    card_brand =  charge.source.brand
+    card_last4 = charge.source.last4
     InvoicePayment.create(
       stripe_id: invoice.id,
       amount: invoice.total,
@@ -30,7 +31,7 @@ StripeEvent.configure do |events|
       user_id: user.id,
       subscription_id: subscription.id
     )
-    StripeMailer.delay.receipt(invoice,card)
+    StripeMailer.delay.receipt(invoice,card_brand,card_last4)
     StripeMailer.delay.admin_invoice_succeeded(invoice)
   end
 end

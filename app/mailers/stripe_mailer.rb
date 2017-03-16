@@ -14,9 +14,10 @@ class StripeMailer < ActionMailer::Base
 		mail(to: 'hani@aiderbotics.com', subject: 'Woo! Charge Succeeded!')
 	end
 
-	def receipt(invoice,card)
+	def receipt(invoice,card_brand,card_last4)
 		@invoice = invoice
-		@card = card
+		@card_brand = card_brand
+		@card_last4 = card_last4
 		@user = User.find_by(stripe_customer_id: invoice.customer)
 		html = render_to_string('stripe_mailer/receipt.html')
 		pdf = Docverter::Conversion.run do |c|
