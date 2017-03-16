@@ -1,28 +1,21 @@
 <% unless @subscription.errors.blank? %>
 <%= @subscription.errors.full_messages.to_sentence %>
 <% end %>
-<div class="row">
-  <div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 500px;">
- <img src=<%= image_url("screenshot_elucidaid_01.png") %> class=".img-fluid" style="max-width: 100%;" alt="Responsive image">
-    <hr class="my-4">
-</div>
-</div>
-<div class="row">
-  <div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 400px;">
-  <p class="lead text-center ">Start Creating Your Lab Notes Today!</p>
-<p class="lead text-center">Enjoy eLucidaid with Free Trial.</p>
-</div>
-</div>
+
 <!-- end header content -->
 <div class="row">
-  <div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 400px;">
-    <div class="well">
+
+  <div class="col-sm-9 col-centered" style="float: none; margin: 0 auto;min-width: 630px;">
+  <p class="lead" style="font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;">Start a new Lab Book today!</p>
+    <div class="row">
+      <div class="col-xs-8 col-sm-6" style="background-color: #f9f7f7;border-style: solid;border-color: #afafaf;border-width: 1px;min-width: 350px;min-height: 450px;">
+        
 
       <%= form_tag subscriptions_path, :class => 'card-form', :id => 'subscribe-form' do %>
 
       <input type="hidden" class="field is-empty" name="plan_id" value=<%= @plan.id %> />
       <label>
-        <input name="cardholder-name" class="field is-empty" placeholder="" />
+        <input name="cardholdername" class="field is-empty" placeholder="" />
         <span><span>Name</span></span>
       </label>
       <label>
@@ -33,25 +26,33 @@
         <div id="card-element" class="field is-empty"></div>
         <span><span>Card Number</span></span>
       </label>
+      <div style="height: 50px;"></div>
       <div class="loader col-centered" id='loader'></div>
-      <button class="btn btn-block btn-success" type="submit" name="submit">Subscribe Now!</button>
+      <button class="btn btn-block btn-success" type="submit" name="submit" style="font-size: 18px;font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;">Purchase</button>
       <div class="outcome">
 
         <div class="error"></div>
       </div></br></br>
       <% end %>
+   
+      </div>
+      <div class="col-xs-8 col-sm-6 col-md-4" style="background-color:#efefef;border-style: solid;border-color: #afafaf;border-width: 1px;min-width: 350px;min-height: 450px;padding-top: 50px;">
+        <p class="lead text-center text-success" style="font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;">ELUCIDAID PREMIUM</p>
+         <div class="col-centered" style="padding-top: 25px;padding-left: 15px;float: none; margin: 0 auto;width: 250px;height: 80px;background-color: white;border-radius: 5px;border-color: #7f7e7e;border-width: 1px;border-style: solid;">
+         <p style="font-size: 23px;font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;
+         font-variant: normal;color:#7f7e7e;">$149.99 <span style="font-size: 16px;">/year</span></p>
+         <p style="font-size: 12px;font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;
+         font-variant: normal;color:green;font-weight: bold;">Includes 7 Day FREE Trial</p>
+         </div>
+         <div class="col-centered" style="padding-top: 25px;padding-left: 15px;float: none; margin: 0 auto;width: 250px;">
+            <p> Your credit card will be charged $149.99, after the '7 Day Free' Trial. This subscription will automatically renew.</p>
+            <p>Need assistance? Contact us: </p><p><a href="mailto:help@elucidaid.com">help@elucidaid.com</a></p><p> Phone: +1 (302) 250-4868</p></br>
+            </div>
+      </div>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 400px;">
-  <p>1- Annual license fee: $149.99</p>
-  <p>2- Payments are processed after the '7 Day Trial' period.</p>
-  <p>3- Charge NOT applied if you cancel within 7 days.</p>
-   <hr class="my-4">
-<p class="text-success">Need assistance? Contact us: </p><p><a href="mailto:help@elucidaid.com">help@elucidaid.com</a></p><p> Phone: +1 (302) 250-4868</p></br>
-</div>
-</div>
+
 <style type="text/css">
 .loader {
     border-bottom: 6px solid white; /* Light grey */
@@ -192,7 +193,7 @@ $('.loader').hide();
     iconStyle: 'solid',
     style: {
       base: {
-        iconColor: '#8898AA',
+        iconColor: '#8798AB',
         color: 'black',
         lineHeight: '36px',
         fontWeight: 300,
@@ -200,7 +201,7 @@ $('.loader').hide();
         fontSize: '19px',
 
         '::placeholder': {
-          color: '#8898AA',
+          color: '#8798AB',
         },
       },
       invalid: {
@@ -263,7 +264,7 @@ $('.loader').hide();
     form.querySelector('button[name=submit]').disabled = true;
     $('.loader').show();
     var extraDetails = {
-      name: form.querySelector('input[name=cardholder-name]').value,
+      name: form.querySelector('input[name=cardholdername]').value,
     };
     var promise = stripe.createToken(card, extraDetails);
     promise.then(function(result){

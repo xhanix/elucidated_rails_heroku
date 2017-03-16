@@ -44,6 +44,7 @@ gem 'docverter'
 gem 'sidekiq'
 gem 'devise'
 gem "attr_encrypted", "~> 3.0.0"
+gem "font-awesome-rails"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'rails_12factor', group: :production

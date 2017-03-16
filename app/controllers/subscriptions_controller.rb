@@ -19,7 +19,7 @@ class SubscriptionsController < ApplicationController
     plan = Plan.find(params[:plan_id])
     token = params[:stripeToken]
     email = params[:email]
-    fullname = params[:name]
+    fullname = params[:cardholdername]
     @key = SecureRandom.hex(12)
     user = CreateUser.call(email,@key,fullname)
     subscription = Subscription.new(
