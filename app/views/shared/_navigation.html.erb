@@ -1,24 +1,22 @@
 <!-- app/views/shared/_navigation.html.erb -->
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
+<nav class="navbar navbar-default navbar-static-top" style="height: 75px;">
+  <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
+    <div class="navbar-header" >
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<%= root_path %>"><img  src="<%= image_url("pay_logo.png") %>"></a>
+      <a class="navbar-brand" href="<%= root_path %>" style="font-size: 28px;color: green;font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;" ><img src="<%= image_url("logo-resized.png")%>", style="width: 50px;">eLucidaid</a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="<%= root_path %>">Home</a></li>
+      <ul class="nav navbar-nav navbar-right" style="margin-top: 15px;">
         <li><a href="<%= static_pages_pricing_url %>">Pricing</a></li>
         <li><a href="<%= new_subscription_path(:plan_id => '7') %>">Download</a></li>
-         <li><a href="<%= static_pages_features_url %>">Features</a></li>
-        <li><a href="<%= static_pages_contact_url %>">Contact</a></li>
+        <li><a href="<%= static_pages_features_url %>">Features</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

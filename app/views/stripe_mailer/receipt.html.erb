@@ -112,7 +112,10 @@
                             <td>
                                 aiderBotics, Inc.<br>
                                 8 The Green, #5340<br>
-                                Dover, DE 19901
+                                Dover, DE 19901<br>
+                                Phone: +1 (302) 250-4868<br>
+                                Fax: +1 (302) 250-4869<br>
+                                www.aiderbotics.com<br>
                             </td>
                             
                             <td>
@@ -140,7 +143,7 @@
                 </td>
                 
                 <td>
-                    <%= @card_last4 %>
+                   *** *** <%= @card_last4 %>
                 </td>
             </tr>
             
@@ -156,16 +159,21 @@
             
             <tr class="item">
                 <td>
-                    eLucidaid One Year License
+                    eLucidaid License (1 year)
                 </td>
                 
                 <td>
                     $149.99
                 </td>
             </tr>
-            
-            
-            
+            <tr class="item">
+                <td>
+                    License Key: <%= @user.description %>
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
             <tr class="item last">
                 <td>
                     Additional Charges

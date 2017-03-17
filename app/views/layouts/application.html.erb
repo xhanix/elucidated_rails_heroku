@@ -1,38 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>eLucidaid</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'https://js.stripe.com/v3/' %>
-    <style type="text/css">
-.carousel{
-    background: #2f4357;
-    margin-top: 20px;
-}
-.carousel .item img{
-    margin: 0 auto; /* Align slide image horizontally center */
-}
-.bs-example{
-  margin: 20px;
-}
-</style>
-  </head>
-  <body>
+<head>
+  <title>eLucidaid</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'https://js.stripe.com/v3/' %>
+  <style type="text/css">
+    .carousel{
+      background: #2f4357;
+      margin-top: 20px;
+    }
+    .carousel .item img{
+      margin: 0 auto; /* Align slide image horizontally center */
+    }
+    .bs-example{
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
   <%= render 'shared/navigation' %>
-    <div id="main-container" class="container-fluid">
-     <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
-        
-          <%= yield %>
-       
-     
-    </div>
- 
-</div>
- 
-  </body>
-
+  <div id="main-container" class="container">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>  
+    <%= yield %>
+  </div>
+</body>
 </html>
