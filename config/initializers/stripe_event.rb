@@ -8,7 +8,7 @@ end
 StripeEvent.configure do |events|
 
 	events.subscribe 'charge.dispute.created' do |event|
-		StripeMailer.admin_dispute_created(event.data.object).deliver
+		StripeMailer.delay.admin_dispute_created(event.data.object)
 	end 
   
 	events.subscribe 'charge.succeeded' do |event|

@@ -1,16 +1,19 @@
 class StripeMailer < ActionMailer::Base
 	default from: 'help@elucidaid.com'
-	def admin_dispute_created(charge)
-		@charge = charge
-		@sale = Sale.find_by(stripe_id: @charge.id)
-		if @sale
-			mail(to: 'hani@aiderbotics.com', subject: "Dispute created on charge #{@sale.guid} (#{charge.id})").deliver
-		end 
+	def admin_dispute_created(dispute)
+		@dispute = dispute
+		mail(to: 'hani@aiderbotics.com', subject: "Dispute opened")
 	end
 
 	def admin_invoice_succeeded(invoice)
 		@invoice = invoice
 		@user = User.find_by(stripe_customer_id: invoice.customer)
+		mail(to: 'hani@aiderbotics.com', subject: 'Woo! Charge Succeeded!')
+	end
+
+	def admin_paypalcharge_succeeded(subscription)
+		@subscription = Subscription.find_by(braintree_id: subscription.id)
+		@user = @subscription.user
 		mail(to: 'hani@aiderbotics.com', subject: 'Woo! Charge Succeeded!')
 	end
 

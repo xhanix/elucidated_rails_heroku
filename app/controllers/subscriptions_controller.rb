@@ -2,7 +2,6 @@ class SubscriptionsController < ApplicationController
   protect_from_forgery with: :exception
   before_action :load_subscription
   before_action :authenticate_authuser!, only: [:show, :edit, :update, :destroy,:index]
-
   def index
     @subscription = Subscription.all
   end
@@ -13,28 +12,75 @@ class SubscriptionsController < ApplicationController
   def new
     @subscription = Subscription.new
     @plan = Plan.find(params[:plan_id])
+    @token = Braintree::ClientToken.generate
+  end
+
+  #braintree client token
+  def clientToken
+    @token = Braintree::ClientToken.generate
   end
 
   def create
-    plan = Plan.find(params[:plan_id])
-    token = params[:stripeToken]
-    email = params[:email]
-    fullname = params[:cardholdername]
-    @key = SecureRandom.hex(12)
-    user = CreateUser.call(email,@key,fullname)
-    subscription = Subscription.new(
-      plan: plan,
-      user: user,
-      stripe_id: token
-    )
-    if subscription.save
-      StripeSubscriberWorker.perform_async(subscription.guid)
-      render json: { guid: subscription.guid }
-    else
-      errors = subscription.errors.full_messages
-      render json: {error: errors.join(" ")}, status: 400
+      plan = Plan.last
+      stipe_token = params[:stripeToken]
+      email = params[:email]
+      fullname = params[:cardholdername]
+      braintree_nonce = params[:braintree]
+      deviceData = params[:myDeviceData]
+      @key = SecureRandom.hex(12)
+      user = CreateUser.call(email,@key,fullname)
+    if braintree_nonce and stipe_token.nil?
+      if user.braintree_id?
+        customer = Braintree::Customer.find(user.braintree_id)
+      else
+        result = Braintree::Customer.create(
+          :payment_method_nonce => braintree_nonce,
+          :email => email
+          )
+        if result.success?
+          #puts result.customer.id
+          #paypal_account = Braintree::PayPalAccount.find(result.customer.payment_methods[0].token)
+          customer = result.customer
+          user.update(braintree_id: customer.id)
+        else
+          p result.errors
+        end
+      end
+        result = Braintree::Subscription.create(
+          :payment_method_token => customer.default_payment_method.token,
+          :plan_id => 'elucidaid_premium'
+        )
+        subscription = Subscription.new(
+          plan: plan,
+          user: user,
+          braintree_id: result.subscription.id
+        )
+        flash[:key] = @key
+        if subscription.save
+          result = Braintree::Customer.update(
+          customer.id,
+          :first_name => subscription.braintree_id,
+          :custom_fields => {
+            :license_key => @key
+          }
+        )
+          redirect_to "/download_app/" + subscription.guid
+        end
+    elsif !braintree_nonce and stipe_token
+      subscription = Subscription.new(
+        plan: plan,
+        user: user,
+        stripe_id: stipe_token
+        )
+      if subscription.save
+        StripeSubscriberWorker.perform_async(subscription.guid)
+        render json: { guid: subscription.guid }
+      else
+        errors = subscription.errors.full_messages
+        render json: {error: errors.join(" ")}, status: 400
+      end
+      flash[:key] = @key
     end
-    flash[:key] = @key
   end
 
   def status
@@ -57,7 +103,7 @@ class SubscriptionsController < ApplicationController
     :content_type => resp.headers['Content-Type']
   end
 
-protected
+  protected
 
   def load_subscription
     @subscription = Subscription.all

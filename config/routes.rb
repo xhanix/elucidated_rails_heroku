@@ -23,5 +23,6 @@ Rails.application.routes.draw do
   get 'static_pages/pricing'
   get 'static_pages/features'
   get 'static_pages/contact'
-
+  get  "/client_token", to: 'subscriptions#clienToken', as: :client_token
+  post '/webhooks', to: 'webhooks#parse', as: :webhook
 end

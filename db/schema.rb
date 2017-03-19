@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170315231242) do
+ActiveRecord::Schema.define(version: 20170319030038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,11 +97,13 @@ ActiveRecord::Schema.define(version: 20170315231242) do
     t.integer  "user_id"
     t.integer  "plan_id"
     t.string   "stripe_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "guid"
     t.string   "state"
     t.text     "error"
+    t.string   "braintree_id"
+    t.string   "status"
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
     t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
   end
@@ -115,6 +117,7 @@ ActiveRecord::Schema.define(version: 20170315231242) do
     t.string   "encrypted_description"
     t.string   "encrypted_description_iv"
     t.string   "fullname"
+    t.string   "braintree_id"
   end
 
   create_table "versions", force: :cascade do |t|

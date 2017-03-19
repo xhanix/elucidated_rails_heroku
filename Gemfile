@@ -45,6 +45,8 @@ gem 'sidekiq'
 gem 'devise'
 gem "attr_encrypted", "~> 3.0.0"
 gem "font-awesome-rails"
+gem 'paypal-sdk-rest'
+gem "braintree", "~> 2.72.0"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'rails_12factor', group: :production

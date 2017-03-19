@@ -1,5 +1,10 @@
 <html>
   <body>
-    <p>Dispute opened on <%= link_to "charge #{@sale.guid}", sale_url(@sale) %></p>
+    <p>Dispute opened on braintree: </p>
+    <p> Amount: @dispute.amount </p>
+    <p> Date received: @dispute.received_date </p>
+    <p> Reply by: @dispute.reply_by_date </p>
+    <p> Reason: @dispute.reason </p>
+    <p> Kind: @dispute.kind </p> 
   </body>
   </html>

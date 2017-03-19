@@ -1,6 +1,6 @@
 class CreatePlan
   def self.call(options={})
-    plan = Plan.new(options)
+    plan = Stripe::Plan.new(options)
 
     if !plan.valid?
       return plan

@@ -6,10 +6,9 @@ class CreateUser
     return user if user.present?
     user = User.create!(
       email: email_address,
+      fullname: fullname,
+      description: key
     )
-    user.description = key
-    user.fullname = fullname
-
     user.save
     return user
   end

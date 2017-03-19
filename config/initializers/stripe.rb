@@ -4,3 +4,9 @@ Rails.configuration.stripe = {
 }
 
 Stripe.api_key = Rails.configuration.stripe[:secret_key]
+
+
+Braintree::Configuration.environment = :sandbox
+Braintree::Configuration.merchant_id = ENV['BRAINTREE_MERCHANT']
+Braintree::Configuration.public_key = ENV['BRAINTREE_PUBLIC']
+Braintree::Configuration.private_key = ENV['BRAINTREE_PRIVATE']
