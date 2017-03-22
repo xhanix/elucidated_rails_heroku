@@ -35,8 +35,8 @@ class SubscriptionsController < ApplicationController
       else
         result = Braintree::Customer.create(
           :payment_method_nonce => braintree_nonce,
-          :email => email
-          :first_name => fullname
+          :email => email,
+          :first_name => fullname,
           :custom_fields => {
             :license_key => @key
           }
