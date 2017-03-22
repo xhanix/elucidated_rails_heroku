@@ -7,7 +7,7 @@ class WebhooksController < ApplicationController
 		    request.params["bt_signature"],
 		    request.params["bt_payload"]
 		  )
-		puts '********* [BRAINTREE Webhook Received. Kind: #{webhook_notification.kind}] *********'
+		puts '********* [BRAINTREE Webhook Received. Kind: '+ webhook_notification.kind +' ] *********'
 		if webhook_notification.subscription
 			subscription = Subscription.find_by!(braintree_id: webhook_notification.subscription.id)
 		end
