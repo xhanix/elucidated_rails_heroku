@@ -36,6 +36,10 @@ class SubscriptionsController < ApplicationController
         result = Braintree::Customer.create(
           :payment_method_nonce => braintree_nonce,
           :email => email
+          :first_name => fullname
+          :custom_fields => {
+            :license_key => @key
+          }
           )
         if result.success?
           #puts result.customer.id
@@ -46,6 +50,7 @@ class SubscriptionsController < ApplicationController
           p result.errors
         end
       end
+      # can get user from here: subscription.status_history[0].user
         result = Braintree::Subscription.create(
           :payment_method_token => customer.default_payment_method.token,
           :plan_id => 'elucidaid_premium'
@@ -57,13 +62,6 @@ class SubscriptionsController < ApplicationController
         )
         flash[:key] = @key
         if subscription.save
-          result = Braintree::Customer.update(
-          customer.id,
-          :first_name => subscription.braintree_id,
-          :custom_fields => {
-            :license_key => @key
-          }
-        )
           redirect_to "/download_app/" + subscription.guid
         end
     elsif !braintree_nonce and stipe_token
