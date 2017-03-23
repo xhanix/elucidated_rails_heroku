@@ -13,7 +13,6 @@ class StripeMailer < ActionMailer::Base
 
 	def admin_paypalcharge_succeeded(subscription)
 		@subscription = Subscription.find_by(braintree_id: subscription.id)
-		@user = @subscription.user
 		mail(to: 'hani@aiderbotics.com', subject: 'Woo! Charge Succeeded!')
 	end
 
