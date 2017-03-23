@@ -36,7 +36,7 @@ class Subscription < ApplicationRecord
 	def subscribe_customer
 		user = self.user
 		plan = self.plan
-		source = self.stripe_id
+		source = self.stripe_id || self.braintree_id #temp holds token or nonce till replaced with actual subscription id
 		begin
 			new_sub = nil
 			save!
@@ -62,9 +62,6 @@ class Subscription < ApplicationRecord
 		          :first_name => user.fullname,
 		          )
         		if result.success?
-        			puts result.customer
-        			puts result.customer.default_payment_method
-        			puts result.customer.default_payment_method.token
 					new_sub = Braintree::Subscription.create(
 						:payment_method_token => result.customer.default_payment_method.token,
 				        :plan_id => 'elucidaid_premium'
