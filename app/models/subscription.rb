@@ -56,18 +56,22 @@ class Subscription < ApplicationRecord
         		new_sub = customer.subscriptions.create(plan: plan.stripe_id)
         		sub_provider = "Stripe"
         	elsif user.braintree_id.blank? and self.braintree_id.present?
-        		customer = Braintree::Customer.create(
+        		result = Braintree::Customer.create(
 		          :payment_method_nonce => source,
 		          :email => user.email,
 		          :first_name => user.fullname,
 		          )
-        		new_sub = Braintree::Subscription.create(
-		          :payment_method_token => customer.default_payment_method.token,
-		          :plan_id => 'elucidaid_premium'
-		        )
-        		user.braintree_id = customer.id
-        		user.save!
-        		sub_provider = "Braintree"
+        		if result.success?
+					new_sub = Braintree::Subscription.create(
+						:payment_method_token => result.customer.default_payment_method.token,
+				        :plan_id => 'elucidaid_premium'
+			        )
+	        		user.braintree_id = result.customer.id
+	        		user.save!
+	        		sub_provider = "Braintree"
+				else
+					p result.errors
+				end
         	elsif user.braintree_id.present?
         		customer = Braintree::Customer.find(user.braintree_id)
         		new_sub = Braintree::Subscription.create(
@@ -79,7 +83,7 @@ class Subscription < ApplicationRecord
         	if sub_provider == "Stripe"
         		self.update(stripe_id: new_sub.id)
         	else
-        		self.update(braintree_id: new_sub.id)
+        		self.update(braintree_id: new_sub.subscription.id) #braintree returns results object with create
         		StripeMailer.delay.braintree_receipt(self)
     			StripeMailer.delay.admin_paypalcharge_succeeded(self)
         	end
