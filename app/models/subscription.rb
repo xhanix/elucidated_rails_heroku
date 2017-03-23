@@ -51,7 +51,7 @@ class Subscription < ApplicationRecord
         		user.save!
         		new_sub = customer.subscriptions.first
         		sub_provider = "Stripe"
-        	elsif user.stripe_id.present?
+        	elsif user.stripe_customer_id.present?
         		customer = Stripe::Customer.retrieve(user.stripe_customer_id)
         		new_sub = customer.subscriptions.create(plan: plan.stripe_id)
         		sub_provider = "Stripe"
