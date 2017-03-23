@@ -29,7 +29,23 @@ class StripeMailer < ActionMailer::Base
 			c.content = html
 		end
 		attachments['Invoice.pdf'] = pdf
-		mail(to: @user.email, subject: "Your eLucidaid Purchase Receipt")
+		mail(to: @user.email, subject: "Your eLucidaid License Key and Invoice")
 	end
+
+	def braintree_receipt(subscription,card_brand,card_last4)
+		@invoice = subscription
+		@card_brand = 'PayPal'
+		@card_last4 = ' '
+		@user = subscription.user
+		html = render_to_string('stripe_mailer/braintree_receipt.html')
+		pdf = Docverter::Conversion.run do |c|
+			c.from = 'html'
+			c.to = 'pdf'
+			c.content = html
+		end
+		attachments['Invoice.pdf'] = pdf
+		mail(to: @user.email, subject: "Your eLucidaid License Key and Invoice")
+	end
+
 	
 end

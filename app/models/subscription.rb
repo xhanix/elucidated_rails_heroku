@@ -58,7 +58,7 @@ class Subscription < ApplicationRecord
         	elsif user.braintree_id.blank? and self.braintree_id.present?
         		customer = Braintree::Customer.create(
 		          :payment_method_nonce => source,
-		          :email => email,
+		          :email => user.email,
 		          :first_name => fullname,
 		          )
         		new_sub = Braintree::Subscription.create(
@@ -80,6 +80,8 @@ class Subscription < ApplicationRecord
         		self.update(stripe_id: new_sub.id)
         	else
         		self.update(braintree_id: new_sub.id)
+        		StripeMailer.delay.braintree_receipt(self)
+    			StripeMailer.delay.admin_paypalcharge_succeeded(self)
         	end
         	self.finish!
 		rescue Stripe::StripeError, Braintree::NotFoundError, Braintree::AuthorizationError, 
