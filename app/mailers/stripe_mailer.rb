@@ -32,7 +32,7 @@ class StripeMailer < ActionMailer::Base
 		mail(to: @user.email, subject: "Your eLucidaid License Key and Invoice")
 	end
 
-	def braintree_receipt(subscription,card_brand,card_last4)
+	def braintree_receipt(subscription)
 		@invoice = subscription
 		@card_brand = 'PayPal'
 		@card_last4 = ' '
