@@ -69,9 +69,9 @@ class Subscription < ApplicationRecord
         		user.save!
         		sub_provider = "Braintree"
         	elsif user.braintree_id.present?
-        		customer = Braintree::Customer.find(user.braintree_id)
+        		customer_search_result = Braintree::Customer.find(user.braintree_id)
         		new_sub = Braintree::Subscription.create(
-		          :payment_method_token => customer.default_payment_method.token,
+		          :payment_method_token => customer_search_result.customer.default_payment_method.token,
 		          :plan_id => 'elucidaid_premium'
 		        )
 		        sub_provider = "Braintree"
