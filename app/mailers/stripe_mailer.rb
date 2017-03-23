@@ -36,6 +36,7 @@ class StripeMailer < ActionMailer::Base
 		@card_brand = 'PayPal'
 		@card_last4 = ' '
 		@user = subscription.user
+		@download_link = app_download_url(guid: subscription.guid)
 		html = render_to_string('stripe_mailer/braintree_receipt.html')
 		pdf = Docverter::Conversion.run do |c|
 			c.from = 'html'
