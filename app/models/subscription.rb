@@ -59,7 +59,7 @@ class Subscription < ApplicationRecord
         		customer = Braintree::Customer.create(
 		          :payment_method_nonce => source,
 		          :email => user.email,
-		          :first_name => fullname,
+		          :first_name => user.fullname,
 		          )
         		new_sub = Braintree::Subscription.create(
 		          :payment_method_token => customer.default_payment_method.token,
