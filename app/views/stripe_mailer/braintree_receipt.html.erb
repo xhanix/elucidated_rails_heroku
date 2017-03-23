@@ -139,7 +139,7 @@
             
             <tr class="details">
                 <td>
-                    '<%= @card_brand %>'
+                    <%= @card_brand %>
                 </td>
             </tr>
             
@@ -164,7 +164,7 @@
             </tr>
             <tr class="item last">
                 <td>
-                    License Key: <%= @user.description %>
+                    License Key: <strong><%= @user.description %></strong>
                     <a href="<%= @download_link %>" type="button" class="btn btn-primary btn-sm" style="color: white;margin-left: 30px;"><span class="lead">Download eLucidaid</span></a>
                 </td>
                 <td>
