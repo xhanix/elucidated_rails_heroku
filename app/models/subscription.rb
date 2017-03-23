@@ -62,6 +62,9 @@ class Subscription < ApplicationRecord
 		          :first_name => user.fullname,
 		          )
         		if result.success?
+        			puts result.customer
+        			puts result.customer.default_payment_method
+        			puts result.customer.default_payment_method.token
 					new_sub = Braintree::Subscription.create(
 						:payment_method_token => result.customer.default_payment_method.token,
 				        :plan_id => 'elucidaid_premium'
