@@ -56,22 +56,22 @@ class Subscription < ApplicationRecord
         		new_sub = customer.subscriptions.create(plan: plan.stripe_id)
         		sub_provider = "Stripe"
         	elsif user.braintree_id.blank? and self.braintree_id.present?
-        		customer_create_result = Braintree::Customer.create(
+        		customer = Braintree::Customer.create(
 		          :payment_method_nonce => source,
 		          :email => user.email,
 		          :first_name => user.fullname,
 		          )
         		new_sub = Braintree::Subscription.create(
-		          :payment_method_token => customer_create_result.customer.default_payment_method.token,
+		          :payment_method_token => customer.default_payment_method.token,
 		          :plan_id => 'elucidaid_premium'
 		        )
         		user.braintree_id = customer.id
         		user.save!
         		sub_provider = "Braintree"
         	elsif user.braintree_id.present?
-        		customer_search_result = Braintree::Customer.find(user.braintree_id)
+        		customer = Braintree::Customer.find(user.braintree_id)
         		new_sub = Braintree::Subscription.create(
-		          :payment_method_token => customer_search_result.customer.default_payment_method.token,
+		          :payment_method_token => customer.default_payment_method.token,
 		          :plan_id => 'elucidaid_premium'
 		        )
 		        sub_provider = "Braintree"
