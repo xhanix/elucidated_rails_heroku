@@ -27,57 +27,26 @@ class SubscriptionsController < ApplicationController
       fullname = params[:cardholdername]
       braintree_nonce = params[:braintree]
       deviceData = params[:myDeviceData]
-      @key = SecureRandom.hex(12)
-      user = CreateUser.call(email,@key,fullname)
+      user = CreateUser.call(email,fullname)
     if braintree_nonce and stipe_token.nil?
-      if user.braintree_id?
-        customer = Braintree::Customer.find(user.braintree_id)
-      else
-        result = Braintree::Customer.create(
-          :payment_method_nonce => braintree_nonce,
-          :email => email,
-          :first_name => fullname,
-          :custom_fields => {
-            :license_key => @key
-          }
-          )
-        if result.success?
-          #puts result.customer.id
-          #paypal_account = Braintree::PayPalAccount.find(result.customer.payment_methods[0].token)
-          customer = result.customer
-          user.update(braintree_id: customer.id)
-        else
-          p result.errors
-        end
-      end
-      # can get user from here: subscription.status_history[0].user
-        result = Braintree::Subscription.create(
-          :payment_method_token => customer.default_payment_method.token,
-          :plan_id => 'elucidaid_premium'
+     subscription = Subscription.new(
+        plan: plan,
+        user: user,
+        braintree_id: braintree_nonce
         )
-        subscription = Subscription.new(
-          plan: plan,
-          user: user,
-          braintree_id: result.subscription.id
-        )
-        flash[:key] = @key
-        if subscription.save
-          redirect_to "/download_app/" + subscription.guid
-        end
-    elsif !braintree_nonce and stipe_token
+    else
       subscription = Subscription.new(
         plan: plan,
         user: user,
         stripe_id: stipe_token
         )
-      if subscription.save
-        StripeSubscriberWorker.perform_async(subscription.guid)
-        render json: { guid: subscription.guid }
-      else
-        errors = subscription.errors.full_messages
-        render json: {error: errors.join(" ")}, status: 400
-      end
-      flash[:key] = @key
+    end
+    if subscription.save
+      StripeSubscriberWorker.perform_async(subscription.guid)
+      render json: { guid: subscription.guid }
+    else
+      errors = subscription.errors.full_messages
+      render json: {error: errors.join(" ")}, status: 400
     end
   end
 

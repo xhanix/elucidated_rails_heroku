@@ -5,15 +5,12 @@ class Subscription < ApplicationRecord
 		state :processing
 		state :finished
 		state :errored
-
 		event :process, after: :subscribe_customer do
 			transitions from: :pending, to: :processing
 		end
-
 		event :finish do
 			transitions from: :processing, to: :finished
 		end
-
 		event :fail do
 			transitions from: :processing, to: :errored
 		end
@@ -23,8 +20,8 @@ class Subscription < ApplicationRecord
 	belongs_to :plan
 	has_paper_trail
 	before_save :populate_guid
-
-
+	validates_uniqueness_of :guid
+	
 	private
 	def populate_guid
 		if new_record?
@@ -34,14 +31,16 @@ class Subscription < ApplicationRecord
 		end 
 	end
 
+
+
 	def subscribe_customer
 		user = self.user
 		plan = self.plan
 		source = self.stripe_id
 		begin
-			stripe_sub = nil
+			new_sub = nil
 			save!
-			if user.stripe_customer_id.blank?
+			if user.stripe_customer_id.blank? and self.stripe_id.present?
         		customer = Stripe::Customer.create(
           		source: source,
           		email: user.email,
@@ -50,14 +49,43 @@ class Subscription < ApplicationRecord
         		)
         		user.stripe_customer_id = customer.id
         		user.save!
-        		stripe_sub = customer.subscriptions.first
-      		else
+        		new_sub = customer.subscriptions.first
+        		sub_provider = "Stripe"
+        	elsif user.stripe_id.present?
         		customer = Stripe::Customer.retrieve(user.stripe_customer_id)
-        		stripe_sub = customer.subscriptions.create(plan: plan.stripe_id)
+        		new_sub = customer.subscriptions.create(plan: plan.stripe_id)
+        		sub_provider = "Stripe"
+        	elsif user.braintree_id.blank? and self.braintree_id.present?
+        		customer = Braintree::Customer.create(
+		          :payment_method_nonce => source,
+		          :email => email,
+		          :first_name => fullname,
+		          )
+        		new_sub = Braintree::Subscription.create(
+		          :payment_method_token => customer.default_payment_method.token,
+		          :plan_id => 'elucidaid_premium'
+		        )
+        		user.braintree_id = customer.id
+        		user.save!
+        		sub_provider = "Braintree"
+        	elsif user.braintree_id.present?
+        		customer = Braintree::Customer.find(user.braintree_id)
+        		new_sub = Braintree::Subscription.create(
+		          :payment_method_token => customer.default_payment_method.token,
+		          :plan_id => 'elucidaid_premium'
+		        )
+		        sub_provider = "Braintree"
         	end
-        	self.update(stripe_id: stripe_sub.id)
+        	if sub_provider == "Stripe"
+        		self.update(stripe_id: new_sub.id)
+        	else
+        		self.update(braintree_id: new_sub.id)
+        	end
         	self.finish!
-		rescue Stripe::StripeError => e
+		rescue Stripe::StripeError, Braintree::NotFoundError, Braintree::AuthorizationError, 
+			Braintree::DownForMaintenanceError, Braintree::ForgedQueryString, Braintree::NotFoundError, 
+			Braintree::ServerError, Braintree::SSLCertificateError, Braintree::UnexpectedError, 
+			Braintree::TooManyRequestsError => e
 			puts e.message
 			self.update_attributes(error: e.message)
 			self.fail!

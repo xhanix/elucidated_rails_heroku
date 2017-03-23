@@ -214,6 +214,7 @@
     var form = document.querySelector('form');
     var nameField = form.querySelector('input[name=cardholdername]');
     var emailField = form.querySelector('input[name=email]');
+    var loader = document.querySelector('.loader');
     var card = elements.create('card', {
       iconStyle: 'solid',
       style: {
@@ -268,6 +269,7 @@
           errorElement.textContent = data.error;
           errorElement.classList.add('visible');
           form.querySelector('button[name=submit]').removeAttribute('disabled');
+          paypalButton.removeAttribute('disabled');
           $('.loader').hide();
         }
         else{
@@ -290,7 +292,6 @@
       } else {
         errorElement.classList.remove('visible');
       }
-      var loader = document.querySelector('.loader');
       form.querySelector('button[name=submit]').disabled = true;
       $('.loader').show();
       var extraDetails = {
@@ -373,9 +374,9 @@
         return false;
       }
       else {
-       errorElement.classList.remove('visible');
-
-       paypalInstance.tokenize({
+        $('.loader').show();
+        errorElement.classList.remove('visible');
+        paypalInstance.tokenize({
             flow: 'vault', // This enables the Vault flow
             billingAgreementDescription: 'Your agreement description',
             locale: 'en_US',
@@ -396,27 +397,29 @@
               url: "/subscriptions",
               data: 'braintree='+payload.nonce+'&myDeviceData='+myDeviceData+'&email='+emailField.value+'&cardholdername='+nameField.value,
               success: function(data) {
-                //window.location = "/download_app/" + guid;
+                poll(data.guid, 30);
               },
-              error: function(data) { 
-                alert('There was a problem. Please try again.');
+              error: function(data) {
+                errorElement.textContent = data.responseJSON.error;
+                errorElement.classList.add('visible');
+                paypalButton.removeAttribute('disabled');
+                $('.loader').hide();
               }
             });
           });}
-     }, false);
+      }, false);
   });
   });
-    function validateEmail(email)   
-    {  
-     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))  
-     {  
-      return (true)  
-    }   
-    return (false)  
-  }  
-};
-$(document).ready(ready);
-$(document).on('page:load', ready);
+    function validateEmail(email)  {  
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))  
+      {  
+        return (true)  
+      }   
+      return (false)  
+    }  
+  };
+  $(document).ready(ready);
+  $(document).on('page:load', ready);
 </script>
 
 
