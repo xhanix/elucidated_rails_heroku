@@ -21,6 +21,7 @@ class Subscription < ApplicationRecord
 	has_paper_trail
 	before_save :populate_guid
 	validates_uniqueness_of :guid
+	after_save :send_to_Parse_server
 	
 	private
 	def populate_guid
@@ -29,6 +30,11 @@ class Subscription < ApplicationRecord
 				self.guid = SecureRandom.random_number(1_000_000_000).to_s(36)
 			end 
 		end 
+	end
+
+	def send_to_Parse_server
+		user = self.user
+		MessageParseWorker.perform_async(user.email)
 	end
 
 
@@ -86,6 +92,7 @@ class Subscription < ApplicationRecord
         		self.update(braintree_id: new_sub.subscription.id) #braintree returns results object with create
         		StripeMailer.delay.braintree_receipt(self)
     			StripeMailer.delay.admin_paypalcharge_succeeded(self)
+
         	end
         	self.finish!
 		rescue Stripe::StripeError, Braintree::NotFoundError, Braintree::AuthorizationError, 
