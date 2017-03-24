@@ -111,3 +111,6 @@ ERROR:  cached plan must not change result type
 STATEMENT:  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2
 ERROR:  column users.conditions does not exist at character 37
 STATEMENT:  SELECT "users".* FROM "users" WHERE "users"."conditions" IS NULL
+ERROR:  update or delete on table "plans" violates foreign key constraint "fk_rails_63d3df128b" on table "subscriptions"
+DETAIL:  Key (id)=(7) is still referenced from table "subscriptions".
+STATEMENT:  DELETE FROM "plans" WHERE "plans"."id" = $1

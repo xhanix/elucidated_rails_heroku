@@ -63,8 +63,12 @@ end
   end
 
   def destroy
-  	stripe_plan = Stripe::Plan.retrieve(@plan.stripe_id)
-	stripe_plan.delete
+    begin
+  	 stripe_plan = Stripe::Plan.retrieve(@plan.stripe_id)
+	   stripe_plan.delete
+    rescue Stripe::StripeError => e
+      puts e.message
+    end
   	@plan.destroy
   	respond_to do |format|
   		

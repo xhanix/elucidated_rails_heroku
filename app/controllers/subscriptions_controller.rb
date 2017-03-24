@@ -11,7 +11,7 @@ class SubscriptionsController < ApplicationController
 
   def new
     @subscription = Subscription.new
-    @plan = Plan.find(params[:plan_id])
+    @plan = Plan.find_by(name: 'elucidaid-premium-plan')
   end
 
   #braintree client token
@@ -20,7 +20,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-      plan = Plan.last
+      plan = @plan
       stipe_token = params[:stripeToken]
       email = params[:email]
       fullname = params[:cardholdername]
