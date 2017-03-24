@@ -13,6 +13,7 @@ class Publisher
   def self.channel
     @channel ||= connection.create_channel.tap do |ch|
       ch.confirm_select
+    end
   end
 
   # We are using default settings here
