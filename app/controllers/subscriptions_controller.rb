@@ -20,7 +20,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-      plan = @plan
+      plan = Plan.find_by(name: 'elucidaid-premium-plan')
       stipe_token = params[:stripeToken]
       email = params[:email]
       fullname = params[:cardholdername]
