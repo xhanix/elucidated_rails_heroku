@@ -12,7 +12,6 @@ class SubscriptionsController < ApplicationController
   def new
     @subscription = Subscription.new
     @plan = Plan.find(params[:plan_id])
-    @token = Braintree::ClientToken.generate
   end
 
   #braintree client token

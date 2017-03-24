@@ -22,13 +22,13 @@
         <input name="email" class="field is-empty" placeholder="" type="email" />
         <span><span>Email</span></span>
       </label>
-      <label>
+      <label id="card-field-container">
         <div id="card-element" class="field is-empty"></div>
         <span><span>Card Number</span></span>
       </label>
       <div style="height: 50px;"></div>
-      <div class="loader col-centered" id='loader'></div>
-      <button class="btn btn-block btn-success" type="submit" name="submit" style="font-size: 18px;font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;">Purchase</button>
+      <div class="col col-centered" id='spinner'></div>
+      <button class="btn btn-block btn-success" type="submit" name="submit" id="submit-button" style="font-size: 18px;font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;">Purchase</button>
       <div class="outcome">
 
         <div class="error"></div>
@@ -43,11 +43,9 @@
        font-variant: normal;color:#7f7e7e;">$149.99 <span style="font-size: 16px;">/year</span></p>
        <p style="font-size: 12px;font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;
        font-variant: normal;color:green;font-weight: bold;">Includes 7 Day FREE Trial</p>
-
      </div>
-
      <div class="col-centered" style="padding-top: 25px;padding-left: 15px;float: none; margin: 0 auto;width: 250px;">
-      <p> Your credit card will be charged $149.99, after the '7 Day Free' Trial. This subscription will automatically renew.</p>
+      <p> Charge will apply after the '7 Day Free' Trial. This subscription will automatically renew.</p>
       <p>Need assistance? Contact us: <br><a href="mailto:help@elucidaid.com" class="text-muted">help@elucidaid.com</a><br> Phone: +1 (302) 250-4868</p><br><br>
       <div id="paypal-button"></div><script src="https://www.paypalobjects.com/api/button.js?"
       data-merchant="braintree"
@@ -59,7 +57,7 @@
       data-button_type="button"
       data-button_disabled="false"
       ></script>
-      <p class="text-primary" style="margin-top: -10px;">Please enter your name and email on the left.</p>
+      <button class="btn btn-primary btn-xs" style="margin-top: -10px;visibility: hidden;" id="pay-with-card-btn">Paying by Card?</button>
     </div>
 
   </div>
@@ -67,24 +65,27 @@
 </div>
 
 <style type="text/css">
-  .loader {
-    border-bottom: 6px solid white; /* Light grey */
-    border-left: 6px solid #3498db;
-    border-right: 6px solid #3498db;
-    border-top: 6px solid white; /* Blue */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-    float: none; 
-    margin: 0 auto;
-    margin-bottom: -50px;
-  }
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+  @keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  border-top-color: #333;
+  animation: spinner .6s linear infinite;
+  margin-top: -150px;
+  margin-left: -45px;
+}
   .card-form {
     font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;
     font-size: 19px;
@@ -203,18 +204,20 @@
 <%= javascript_include_tag 'https://js.braintreegateway.com/web/3.11.0/js/paypal.min.js' %>
 <%= javascript_include_tag 'https://js.braintreegateway.com/web/3.11.0/js/data-collector.min.js'%>
 <script type="text/javascript">
+
   var ready;
   ready = function() {
-    $('.loader').hide();
     var stripe = Stripe("<%= Rails.configuration.stripe[:publishable_key] %>");
     var elements = stripe.elements();
     var paypalButton = document.querySelector('.paypal-button');
     var errorElement = document.querySelector('.error');
+    var spinner =  document.querySelector('#spinner')
     var inputs = Array.from(document.querySelectorAll('input.field'));
     var form = document.querySelector('form');
     var nameField = form.querySelector('input[name=cardholdername]');
     var emailField = form.querySelector('input[name=email]');
     var loader = document.querySelector('.loader');
+    var paycardButton = document.querySelector("#pay-with-card-btn");
     var card = elements.create('card', {
       iconStyle: 'solid',
       style: {
@@ -270,18 +273,23 @@
           errorElement.classList.add('visible');
           form.querySelector('button[name=submit]').removeAttribute('disabled');
           paypalButton.removeAttribute('disabled');
-          $('.loader').hide();
+          spinner.classList.remove('spinner');
         }
         else{
           setTimeout(function() { poll(guid, num_retries_left - 1) }, 500);
         }
       }); 
     }
+    paycardButton.addEventListener('click', function(e) {
+      errorElement.classList.remove('visible');
+      $('#submit-button').show();
+      $('#card-field-container').show();
+      });
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       if (!validateEmail(emailField.value)) {
-        errorElement.textContent = 'Enter valid email address.';
+        errorElement.textContent = 'Enter a valid email address.';
         errorElement.classList.add('visible');
         return false
       }
@@ -293,7 +301,7 @@
         errorElement.classList.remove('visible');
       }
       form.querySelector('button[name=submit]').disabled = true;
-      $('.loader').show();
+      spinner.classList.add('spinner');
       var extraDetails = {
         name: form.querySelector('input[name=cardholdername]').value,
       };
@@ -318,20 +326,20 @@
         errorElement.textContent = data.responseJSON.error;
         errorElement.classList.add('visible');
         form.querySelector('button[name=submit]').removeAttribute('disabled');
-        $('.loader').hide();
+        spinner.classList.remove('spinner');
       }
     });
   } else if (result.error) {
     errorElement.textContent = result.error.message;
     errorElement.classList.add('visible');
     form.querySelector('button[name=submit]').removeAttribute('disabled');
-    $('.loader').hide();
+    spinner.classList.remove('spinner');
   }
 });
     });
 
     braintree.client.create({
-      authorization:  "<%= @token %>",
+      authorization:  "<%= @token = Braintree::ClientToken.generate %>",
     }, function (err, clientInstance) {
       braintree.dataCollector.create({
         client: clientInstance,
@@ -363,18 +371,19 @@
     paypalButton.addEventListener('click', function (event) {
       // Because tokenization opens a popup, this has to be called as a result of
       // customer action, like clicking a button—you cannot call this at any time.
+      $('#submit-button').hide();
+      $('#card-field-container').hide();
       if (nameField.value == "" )  {
-        errorElement.textContent = 'Please enter your name and email to pay with PayPal.';
+        errorElement.textContent = 'Please enter your name and email to proceed.';
         errorElement.classList.add('visible');
         return false;
       } 
       else if (!validateEmail(emailField.value)) {
-        errorElement.textContent = 'Please enter a valid email address to pay with PayPal.';
+        errorElement.textContent = 'Please enter a valid email address.';
         errorElement.classList.add('visible');
         return false;
       }
       else {
-        $('.loader').show();
         errorElement.classList.remove('visible');
         paypalInstance.tokenize({
             flow: 'vault', // This enables the Vault flow
@@ -392,6 +401,7 @@
             }
             // Tokenization succeeded!
             paypalButton.setAttribute('disabled', true);
+            spinner.classList.add('spinner');
             $.ajax({
               type: "POST",
               url: "/subscriptions",
@@ -403,7 +413,7 @@
                 errorElement.textContent = data.responseJSON.error;
                 errorElement.classList.add('visible');
                 paypalButton.removeAttribute('disabled');
-                $('.loader').hide();
+                spinner.classList.remove('spinner');
               }
             });
           });}

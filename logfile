@@ -109,3 +109,5 @@ ERROR:  cached plan must not change result type
 STATEMENT:  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2
 ERROR:  cached plan must not change result type
 STATEMENT:  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2
+ERROR:  column users.conditions does not exist at character 37
+STATEMENT:  SELECT "users".* FROM "users" WHERE "users"."conditions" IS NULL

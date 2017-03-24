@@ -33,8 +33,10 @@ class Subscription < ApplicationRecord
 	end
 
 	def send_to_Parse_server
-		user = self.user
-		MessageParseWorker.perform_async(user.email)
+		if self.status.present?
+			user = self.user
+			MessageParseWorker.perform_async(user.email)
+		end
 	end
 
 
@@ -43,6 +45,7 @@ class Subscription < ApplicationRecord
 		user = self.user
 		plan = self.plan
 		source = self.stripe_id || self.braintree_id #temp holds token or nonce till replaced with actual subscription id
+		puts "************** braintree_id guid #{self.braintree_id}"
 		begin
 			new_sub = nil
 			save!
