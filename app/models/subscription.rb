@@ -94,6 +94,7 @@ class Subscription < ApplicationRecord
     			StripeMailer.delay.admin_paypalcharge_succeeded(self)
 
         	end
+        	self.update(status: 'valid')
         	self.finish!
 		rescue Stripe::StripeError, Braintree::NotFoundError, Braintree::AuthorizationError, 
 			Braintree::DownForMaintenanceError, Braintree::ForgedQueryString, Braintree::NotFoundError, 
