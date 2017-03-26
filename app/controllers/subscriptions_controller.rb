@@ -81,10 +81,13 @@ end
         result = Braintree::Subscription.cancel(subscription.braintree_id)
       end
       if subscription.stripe_id.present?
-        stripe_sub = Stripe::Subscription.retrieve(subscription.stripe_id)
+        # Subscriptions cannot be retrieved without a customer ID.
+        # Retrieve a subscription using customer.subscriptions.retrieve('subscription_id')
+        stripeCustomer = Stripe::Customer.retrieve(customer.stripe_customer_id)
+        stripe_sub = stripeCustomer.subscriptions.retrieve(subscription.stripe_id)
         stripe_sub.delete
       end
-      flash.now[:notice] = "Subscription successfully cancelled."
+      flash.now[:notice] = "Subscription successfully cancelled. No more charges will apply after the current billing period."
     rescue Stripe::StripeError, Braintree::NotFoundError => e
       flash.now[:alert] = "Request not processed. Please try again."
     end
