@@ -74,8 +74,8 @@ end
 
   def cancel
    customer = User.find_by!(email: current_licenseuser.email)
-   subscription = Subscription.find_by!(guid: params[:guid])
-   if subscription.user == customer
+   subscription = customer.subscriptions.find_by(guid: params[:guid])
+   if subscription.present?
     begin
       if subscription.braintree_id.present?
         result = Braintree::Subscription.cancel(subscription.braintree_id)
