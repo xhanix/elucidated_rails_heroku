@@ -89,7 +89,7 @@ end
       end
       flash.now[:notice] = "Subscription successfully cancelled. No more charges will apply after the current billing period."
     rescue Stripe::StripeError, Braintree::NotFoundError => e
-      flash.now[:alert] = "Request not processed. Please try again."
+      flash.now[:alert] = "Something went wrong! Please contact us for help. #{e.full_messages}"
     end
     subscription.update(status: 'Cancelled')
   else
