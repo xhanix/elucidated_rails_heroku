@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 400px;">
+    <h1 class="display-3 text-center" style="font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;">My Subscriptions</h1>
+    <hr class="my-4">
+  </div>
+</div>
+<div class="row">
+<div class="well" style="float: none; margin: 0 auto;max-width: 600px;height: 250px;">
+  <div  class="col-centered" style="float: none; margin: 0 auto;max-width: 600px;width: 400px;">
+  <%= form_tag({controller: "subscriptions", action: "search"}, :remote => true, 'data-type' => :json, :authenticity_token => true, class: "form-horizontal") do -%>
+  
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-4 control-label">Email:</label>
+    <div class="col-sm-8">
+      <%= email_field_tag 'email',nil, class: 'form-control', placeholder: "Email"  %>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword3" class="col-sm-4 control-label">License key:</label>
+    <div class="col-sm-8">
+       <%= email_field_tag 'key',nil, class: 'form-control', placeholder: "License Key"  %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-8">
+      <button type="submit" class="btn btn-default">Log In</button>
+    </div>
+  </div>
+<% end %>
+<div class="error col-sm-offset-4 col-sm-8"></div>
+  </div>
+</div>
+</br>
+</div>
+
+<style type="text/css">
+  .success, .error {
+    display: none;
+    font-size: 14px;
+  }
+
+  .success.visible, .error.visible {
+    display: inline;
+  }
+
+  .error {
+    color: #E4584C;
+  }
+</style>
+
+<script type="text/javascript">
+var errorElement = document.querySelector('.error');
+$( document ).ajaxError(function(evt, xhr, status, error) {
+  errorElement.textContent = xhr.responseJSON.error;
+  errorElement.classList.add('visible');
+});
+$( document ).ajaxSuccess(function() {
+  $("form").removeAttr("data-remote");
+  $("form").removeData("remote");
+  $("form").submit();
+});
+
+   
+</script>
