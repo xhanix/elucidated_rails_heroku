@@ -1,7 +1,7 @@
 <% if licenseuser_signed_in? %>
 <div class="row">
 <div class="col-md-8  col-centered" style="float: none; margin: 0 auto;">
-<h1>Subscriptions</h1>
+<h1><%='My Subscription'.pluralize(@subscriptions.count)%></h1>
 </div>
 </div>
 <div class="row">
@@ -10,9 +10,9 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Plan</th>
-      <th>Subscription Date</th>
-      <th>Renew interval</th>
+      <th>Plan ID</th>
+      <th>Subscribed On</th>
+      <th>Renew Interval</th>
       <th>Status</th>
       <th colspan="6"></th>
     </tr>
@@ -25,7 +25,8 @@
         <td><%= subscription.created_at.strftime("%b %d %Y") %></td>
         <td><%= subscription.plan.interval %></td>
         <td><%= subscription.status %></td>
-        <td><%= link_to 'Cancel', {controller: :subscriptions, action: :cancel,guid: subscription.guid}, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs", style: "color: white;", disabled: subscription.status == 'Cancelled' || subscription.status == 'Expired' %>  </td>
+        <td><%= link_to 'Cancel', {controller: :subscriptions, action: :cancel,guid: subscription.guid}, data: { confirm: 'This action cannot be undone. Do you want to continue?' }, class: "btn btn-danger btn-xs", style: "color: white;", disabled: subscription.status == 'Cancelled' || subscription.status == 'Expired' %>  
+        </td>
       </tr>
     <% end %>
   </tbody>

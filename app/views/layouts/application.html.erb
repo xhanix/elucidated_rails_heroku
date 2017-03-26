@@ -26,9 +26,6 @@
     <p class="notice text-success"><%= notice %></p>
     <p class="alert text-danger"><%= alert %></p>  
     <%= yield %>
-    <% if authuser_signed_in? %>
-       <%= link_to('Admin Logout', destroy_authuser_session_path, :method => :delete) %>
-    <% end %>
   </div>
 </body>
 </html>

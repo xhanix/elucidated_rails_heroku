@@ -97,7 +97,7 @@
                             <td>
                                 Invoice #: <%= @user.id %><br>
                                 Created:  <%= Time.at(@invoice.date).strftime("%d/%m/%Y") %><br>
-                                Paid On:  <%= Time.at(@invoice.date+7.days).strftime("%d/%m/%Y") %>
+                                Payment Due:  <%= Time.at(@invoice.date+7.days).strftime("%d/%m/%Y") %>
                             </td>
                         </tr>
                     </table>
@@ -128,7 +128,7 @@
             
             <tr class="heading">
                 <td>
-                    Payment Method
+                    Payment Terms
                 </td>
                 
                 <td>
@@ -138,11 +138,11 @@
             
             <tr class="details">
                 <td>
-                    <%= @card_brand %>
+                    7 Day Free Trial
                 </td>
                 
                 <td>
-                   *** *** <%= @card_last4 %>
+                   Auto Renew
                 </td>
             </tr>
             
@@ -193,7 +193,7 @@
                 <td></td>
                 
                 <td>
-                   Total Paid: $149.99
+                   Total Due: $149.99
                 </td>
             </tr>
         </table>

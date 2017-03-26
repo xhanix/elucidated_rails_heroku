@@ -15,6 +15,16 @@ StripeEvent.configure do |events|
 		charge = event.data.object
 	end
 
+  # Occurs whenever a new invoice is created.
+  events.subscribe('invoice.created') do |event|
+    invoice = event.data.object
+    invoice_sub = invoice.lines.data.select { |i| i.type == 'subscription' }.first.id
+    subscription = Subscription.find_by(stripe_id: invoice_sub)
+    StripeMailer.delay.invoice(invoice,subscription)
+    StripeMailer.delay.admin_invoice_succeeded(invoice)
+  end
+
+  # Occurs whenever an invoice attempts to be paid, and the payment succeeds.
   events.subscribe('invoice.payment_succeeded') do |event|
     invoice = event.data.object
     user = User.find_by(stripe_customer_id: invoice.customer)

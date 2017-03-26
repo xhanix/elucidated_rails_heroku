@@ -30,6 +30,7 @@ Rails.application.configure do
   :host => 'localhost:3000'
 }
 
+config.action_controller.default_url_options = { host: 'elucidaid.com' }
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false

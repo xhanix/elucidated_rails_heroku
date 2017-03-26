@@ -8,7 +8,8 @@ class CreateUser
       fullname: fullname,
       description: key
     )
-    user.save
+    # Create new devise Licenseuser
+    Licenseuser.create!(email:email_address,password: key)
     return user
   end
 end

@@ -3,10 +3,10 @@
 class MessageParseWorker
   include Sidekiq::Worker
 
-  def perform(email)
+  def perform(email,guid)
 		ActiveRecord::Base.connection_pool.with_connection do
 			user = User.find_by(email: email)
-			subscriptionStatus = user.subscriptions.where(plan_id: 1).first.status
+			subscriptionStatus = Subscriptions.find_by!(guid: guid).status
 			return unless user
 			Publisher.publish({username: user.fullname, email: user.email, description: user.description, licenseState: subscriptionStatus})
 		end 

@@ -84,13 +84,13 @@ end
         stripe_sub = Stripe::Subscription.retrieve(subscription.stripe_id)
         stripe_sub.delete
       end
-      flash[:notice] = "Subscription successfully cancelled."
+      flash.now[:notice] = "Subscription successfully cancelled."
     rescue Stripe::StripeError, Braintree::NotFoundError => e
-      flash[:alert] = "Request not processed. Please try again."
+      flash.now[:alert] = "Request not processed. Please try again."
     end
     subscription.update(status: 'Cancelled')
   else
-    flash[:alert] = "Cannot process request."
+    flash.now[:alert] = "Cannot process request."
   end
 end
 
