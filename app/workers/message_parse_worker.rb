@@ -6,7 +6,7 @@ class MessageParseWorker
   def perform(email,guid)
 		ActiveRecord::Base.connection_pool.with_connection do
 			user = User.find_by(email: email)
-			subscriptionStatus = Subscription.find_by!(guid: guid).status
+			subscriptionStatus = user.subscriptions.find_by!(guid: guid).status
 			return unless user
 			Publisher.publish({username: user.fullname, email: user.email, description: user.description, licenseState: subscriptionStatus})
 		end 

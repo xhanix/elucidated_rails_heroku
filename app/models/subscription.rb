@@ -94,7 +94,6 @@ class Subscription < ApplicationRecord
         		self.update(braintree_id: new_sub.subscription.id) #braintree returns results object with create
         		StripeMailer.delay.braintree_receipt(self)
     			StripeMailer.delay.admin_paypalcharge_succeeded(self)
-
         	end
         	self.update(status: 'Active',expires_on: Time.now+365.days)
         	self.finish!
