@@ -45,7 +45,6 @@ class Subscription < ApplicationRecord
 		user = self.user
 		plan = self.plan
 		source = self.stripe_id || self.braintree_id #temp holds token or nonce till replaced with actual subscription id
-		puts "************** braintree_id guid #{self.braintree_id}"
 		begin
 			new_sub = nil
 			save!
@@ -97,7 +96,7 @@ class Subscription < ApplicationRecord
     			StripeMailer.delay.admin_paypalcharge_succeeded(self)
 
         	end
-        	self.update(status: 'valid')
+        	self.update(status: 'Active',expires_on: Time.now+365.days)
         	self.finish!
 		rescue Stripe::StripeError, Braintree::NotFoundError, Braintree::AuthorizationError, 
 			Braintree::DownForMaintenanceError, Braintree::ForgedQueryString, Braintree::NotFoundError, 

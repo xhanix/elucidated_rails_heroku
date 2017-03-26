@@ -114,3 +114,11 @@ STATEMENT:  SELECT "users".* FROM "users" WHERE "users"."conditions" IS NULL
 ERROR:  update or delete on table "plans" violates foreign key constraint "fk_rails_63d3df128b" on table "subscriptions"
 DETAIL:  Key (id)=(7) is still referenced from table "subscriptions".
 STATEMENT:  DELETE FROM "plans" WHERE "plans"."id" = $1
+ERROR:  column subscriptions.name does not exist at character 88
+STATEMENT:  SELECT "subscriptions".* FROM "subscriptions" WHERE "subscriptions"."user_id" = $1 AND "subscriptions"."name" = $2
+ERROR:  column users.description does not exist at character 66
+STATEMENT:  SELECT  "users".* FROM "users" WHERE "users"."email" IS NULL AND "users"."description" IS NULL LIMIT $1
+ERROR:  column users.description does not exist at character 66
+STATEMENT:  SELECT  "users".* FROM "users" WHERE "users"."email" IS NULL AND "users"."description" IS NULL LIMIT $1
+ERROR:  column "jhhj" does not exist at character 39
+STATEMENT:  SELECT  "users".* FROM "users" WHERE (jhhj@gfh.xom) LIMIT $1

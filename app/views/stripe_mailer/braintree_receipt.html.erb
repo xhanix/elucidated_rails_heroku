@@ -142,7 +142,6 @@
                     <%= @card_brand %>
                 </td>
             </tr>
-            
             <tr class="heading">
                 <td>
                     Item
@@ -162,10 +161,17 @@
                     $149.99
                 </td>
             </tr>
-            <tr class="item last">
+            <tr class="item">
                 <td>
                     License Key: <strong><%= @user.description %></strong>
-                    <a href="<%= @download_link %>" type="button" class="btn btn-primary btn-sm" style="color: white;margin-left: 30px;"><span class="lead">Download eLucidaid</span></a>
+                </td>
+                <td>
+                    
+                </td>
+            </tr>
+             <tr class="item last">
+                <td>
+                    <a href="<%= @download_link %>" type="button" class="btn btn-primary btn-sm"><span class="lead">Your Download Link</span></a>
                 </td>
                 <td>
                     

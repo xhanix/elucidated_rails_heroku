@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :licenseusers
   devise_for :authusers
   get 'plans/show'
 
@@ -16,11 +17,16 @@ Rails.application.routes.draw do
   get  '/sub_status/:guid', to: 'subscriptions#status', as: :sub_status
   get '/download_app/:guid', to:'subscriptions#pickup', as: :download_app
   get 'app_download/:guid', to: 'subscriptions#download', as: :app_download
-  resources :subscriptions
+  resources :subscriptions do
+    member do
+      get 'cancel'
+    end
+  end
   resources :plans
   root 'static_pages#home'
   get 'static_pages/about'
   get 'static_pages/pricing'
+  get 'static_pages/viewsubs'
   get 'static_pages/features'
   get 'static_pages/contact'
   get  "/client_token", to: 'subscriptions#clienToken', as: :client_token

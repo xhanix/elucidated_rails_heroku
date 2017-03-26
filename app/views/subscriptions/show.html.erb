@@ -1,11 +1,35 @@
-<p id="notice"><%= notice %></p>
+<% if licenseuser_signed_in? %>
+<div class="row">
+<div class="col-md-8  col-centered" style="float: none; margin: 0 auto;">
+<h1>Subscriptions</h1>
+</div>
+</div>
+<div class="row">
+<div class="col-md-8  col-centered" style="float: none; margin: 0 auto;">
+<div class="well">
+<table class="table">
+  <thead>
+    <tr>
+      <th>Plan</th>
+      <th>Subscription Date</th>
+      <th>Renew interval</th>
+      <th>Status</th>
+      <th colspan="6"></th>
+    </tr>
+  </thead>
 
-<p>
-  <strong>Name:</strong>
-  <%= @subscription %>
-</p>
-
-
-
-<%= link_to 'Edit', edit_subscription_path(@subscription) %> |
-<%= link_to 'Back', subscriptions_path %>
+  <tbody>
+    <% @subscriptions.each do |subscription| %>
+      <tr>
+        <td><%= subscription.plan.name %></td>
+        <td><%= subscription.created_at.strftime("%b %d %Y") %></td>
+        <td><%= subscription.plan.interval %></td>
+        <td><%= subscription.status %></td>
+        <td><%= link_to 'Cancel', {controller: :subscriptions, action: :cancel,guid: subscription.guid}, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs", style: "color: white;", disabled: subscription.status == 'Cancelled' || subscription.status == 'Expired' %>  </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+<% end %>
