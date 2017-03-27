@@ -10,26 +10,26 @@ class WebhooksController < ApplicationController
 		puts "********* [BRAINTREE Webhook Received. Kind: #{webhook_notification.kind} ] *********"
 		if webhook_notification.subscription
 			subscription = Subscription.find_by!(braintree_id: webhook_notification.subscription.id)
-		end
+		
 
 		  if webhook_notification.kind == 'subscription_went_past_due'
 		  elsif webhook_notification.kind == 'DisputeOpened'
 		  	StripeMailer.delay.admin_dispute_created(webhook_notification.dispute)
 		  elsif webhook_notification.kind == 'SubscriptionCanceled'
-		  	subscription.update(status: 'canceled')
+		  	subscription.update(status: 'cancelled')
 		  elsif webhook_notification.kind == 'SubscriptionChargedSuccessfully'
-		  	subscription.update(status: 'charged')
+		  	subscription.update(payment_status: 'paid', expires_on: Date.current+1.year)
+		  	StripeMailer.delay.receipt(invoice,card_brand,card_last4)
 		  	StripeMailer.delay.admin_paypalcharge_succeeded(webhook_notification.subscription)
 		  elsif webhook_notification.kind == 'SubscriptionExpired'
 		  	subscription.update(status: 'expired')
 		  elsif webhook_notification.kind == 'SubscriptionTrialEnded'
 		  elsif webhook_notification.kind == 'SubscriptionWentActive'
 		  	subscription.finish
-		  	subscription.update(status: 'active')
 		  elsif webhook_notification.kind == 'SubscriptionWentPastDue'
-		  	subscription.update(status: 'past_due')
+		  	subscription.update(status: 'failed')
 		  end
-		  	
+		end	
 		  render json: { status: 200 }
 		  return 200
 	end

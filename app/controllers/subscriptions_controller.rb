@@ -34,12 +34,14 @@ class SubscriptionsController < ApplicationController
      subscription = Subscription.new(
       plan: plan,
       user: user,
+      payment_status: 'Free-Trial',
       braintree_id: braintree_nonce
       )
    else
     subscription = Subscription.new(
       plan: plan,
       user: user,
+      payment_status: 'Free-Trial',
       stripe_id: stipe_token
       )
   end
@@ -91,7 +93,9 @@ end
     rescue Stripe::StripeError, Braintree::NotFoundError => e
       flash.now[:alert] = "Something went wrong! Please contact us for help. #{e.message}"
     end
-    subscription.update(status: 'Cancelled')
+      StripeMailer.delay.admin_subscription_cancelled(subscription.guid)
+      subscription.update(status: 'Cancelled')
+      #Don't cancel now. Send email to admin for manual review and email user.
   else
     flash.now[:alert] = "Cannot process request."
   end

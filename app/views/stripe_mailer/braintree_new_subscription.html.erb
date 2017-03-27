@@ -96,8 +96,8 @@
                             
                             <td>
                                 Invoice #: <%= @user.id %><br>
-                                Created:  <%= Time.at(@invoice.date).strftime("%d/%m/%Y") %><br>
-                                Trial ends:  <%= Time.at(@invoice.date+7.days).strftime("%d/%m/%Y") %>
+                                Created:  <%= Time.at(@invoice.created_at).strftime("%d/%m/%Y") %><br>
+                                Trial ends:  <%= Time.at(@invoice.created_at+7.days).strftime("%d/%m/%Y") %>
                             </td>
                         </tr>
                     </table>

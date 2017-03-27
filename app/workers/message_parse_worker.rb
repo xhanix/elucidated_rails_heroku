@@ -6,9 +6,10 @@ class MessageParseWorker
   def perform(email,guid)
 		ActiveRecord::Base.connection_pool.with_connection do
 			user = User.find_by(email: email)
-			subscriptionStatus = user.subscriptions.find_by!(guid: guid).status
-			return unless user
-			Publisher.publish({username: user.fullname, email: user.email, description: user.description, licenseState: subscriptionStatus})
+			subscription = user.subscriptions.find_by(guid: guid)
+			sub_status = 'Active' # use instead of subscription.status to leave Parse account active for now
+			return unless subscription
+			Publisher.publish({username: user.fullname, email: user.email, description: user.description, licenseState: sub_status})
 		end 
 	end
 end

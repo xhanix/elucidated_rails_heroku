@@ -92,10 +92,9 @@ class Subscription < ApplicationRecord
         		self.update(stripe_id: new_sub.id)
         	else
         		self.update(braintree_id: new_sub.subscription.id) #braintree returns results object with create
-        		StripeMailer.delay.braintree_receipt(self)
-    			StripeMailer.delay.admin_paypalcharge_succeeded(self)
+        		StripeMailer.delay.braintree_new_subscription(self)
         	end
-        	self.update(status: 'Active',expires_on: Time.now+365.days)
+        	self.update(status: 'Active',expires_on: Date.current+14.days)
         	self.finish!
 		rescue Stripe::StripeError, Braintree::NotFoundError, Braintree::AuthorizationError, 
 			Braintree::DownForMaintenanceError, Braintree::ForgedQueryString, Braintree::NotFoundError, 
