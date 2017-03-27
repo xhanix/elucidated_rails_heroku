@@ -16,7 +16,8 @@ class WebhooksController < ApplicationController
 		  elsif webhook_notification.kind == 'DisputeOpened'
 		  	StripeMailer.delay.admin_dispute_created(webhook_notification.dispute)
 		  elsif webhook_notification.kind == 'SubscriptionCanceled'
-		  	#subscription.update(status: 'cancelled')
+		  	subscription.update(status: 'cancelled')
+		  	#set status to cancel for display page and background jobs. Compare with payment_status to message to Parse.
 		  	#Do manual handling. email is sent out to me from subscription controller cancel action
 		  elsif webhook_notification.kind == 'SubscriptionChargedSuccessfully'
 		  	subscription.update(payment_status: 'paid', expires_on: Date.current+1.year)
