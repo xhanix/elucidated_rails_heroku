@@ -18,11 +18,10 @@
         <li><%= link_to('Admin Logout', destroy_authuser_session_path, :method => :delete) %></li>
       <% elsif licenseuser_signed_in? %>
         <li><%= link_to('Log Out', destroy_authuser_session_path, :method => :delete,style: "color:blue;") %></li>
-      <% else %>
+      <% end %>
         <li><a href="<%= static_pages_pricing_url %>">Pricing</a></li>
         <li><a href="<%= new_subscription_path %>" data-turbolinks="false">Download</a></li>
         <li><a href="<%= static_pages_features_url %>">Features</a></li>
-      <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

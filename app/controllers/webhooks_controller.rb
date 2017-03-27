@@ -10,6 +10,7 @@ class WebhooksController < ApplicationController
 		puts "********* [BRAINTREE Webhook Received. Kind: #{webhook_notification.kind} ] *********"
 		if webhook_notification.subscription
 			subscription = Subscription.find_by(braintree_id: webhook_notification.subscription.id)
+			#find does not raise exception because want to always return 200 to braintree
 		  if webhook_notification.kind == 'subscription_went_past_due'
 		  	#Don't do anything for now. SubscriptionChargedUnsuccessfully should send out reminder.
 		  elsif webhook_notification.kind == 'DisputeOpened'
