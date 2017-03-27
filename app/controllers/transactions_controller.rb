@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-	before_filter :strip_iframe_protection
+	before_action :strip_iframe_protection
   	before_action :authenticate_authuser!, only: [:index]
 	def iframe
 		@product = Product.find_by!(permalink: params[:permalink])

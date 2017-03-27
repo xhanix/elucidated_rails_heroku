@@ -1,8 +1,14 @@
 require 'test_helper'
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
+=begin
   setup do
     @product = products(:one)
+  end
+
+  test "not authenticated should get redirect" do
+     get :show
+     assert_response :redirect
   end
 
   test "should get index" do
@@ -45,4 +51,5 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to products_url
   end
+=end
 end

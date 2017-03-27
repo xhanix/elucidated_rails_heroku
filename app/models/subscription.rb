@@ -33,7 +33,7 @@ class Subscription < ApplicationRecord
 	end
 
 	def send_to_Parse_server
-		if self.status.present?
+		if self.guid.present? and self.status.present?
 			user = self.user
 			MessageParseWorker.perform_async(user.email, self.guid)
 		end

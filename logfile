@@ -122,3 +122,327 @@ ERROR:  column users.description does not exist at character 66
 STATEMENT:  SELECT  "users".* FROM "users" WHERE "users"."email" IS NULL AND "users"."description" IS NULL LIMIT $1
 ERROR:  column "jhhj" does not exist at character 39
 STATEMENT:  SELECT  "users".* FROM "users" WHERE (jhhj@gfh.xom) LIMIT $1
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:35.974856', '2017-03-27 20:14:35.974856', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.018991', '2017-03-27 20:14:36.018991', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.030979', '2017-03-27 20:14:36.030979', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.326331', '2017-03-27 20:14:36.326331', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.338253', '2017-03-27 20:14:36.338253', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.352221', '2017-03-27 20:14:36.352221', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.370351', '2017-03-27 20:14:36.370351', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.387638', '2017-03-27 20:14:36.387638', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.405871', '2017-03-27 20:14:36.405871', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.418479', '2017-03-27 20:14:36.418479', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.436148', '2017-03-27 20:14:36.436148', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.455126', '2017-03-27 20:14:36.455126', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.475835', '2017-03-27 20:14:36.475835', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.517601', '2017-03-27 20:14:36.517601', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.530996', '2017-03-27 20:14:36.530996', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.550164', '2017-03-27 20:14:36.550164', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.566069', '2017-03-27 20:14:36.566069', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:14:36.583753', '2017-03-27 20:14:36.583753', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.255051', '2017-03-27 20:18:16.255051', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.577819', '2017-03-27 20:18:16.577819', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.588917', '2017-03-27 20:18:16.588917', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.599770', '2017-03-27 20:18:16.599770', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.615540', '2017-03-27 20:18:16.615540', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.633293', '2017-03-27 20:18:16.633293', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.647264', '2017-03-27 20:18:16.647264', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.659906', '2017-03-27 20:18:16.659906', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.676117', '2017-03-27 20:18:16.676117', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.694324', '2017-03-27 20:18:16.694324', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.710632', '2017-03-27 20:18:16.710632', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.722080', '2017-03-27 20:18:16.722080', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.737529', '2017-03-27 20:18:16.737529', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.753052', '2017-03-27 20:18:16.753052', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.773407', '2017-03-27 20:18:16.773407', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.785518', '2017-03-27 20:18:16.785518', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.805299', '2017-03-27 20:18:16.805299', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:18:16.823807', '2017-03-27 20:18:16.823807', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:50.822491', '2017-03-27 20:20:50.822491', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:50.860440', '2017-03-27 20:20:50.860440', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:50.876554', '2017-03-27 20:20:50.876554', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.148999', '2017-03-27 20:20:51.148999', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.161465', '2017-03-27 20:20:51.161465', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.173928', '2017-03-27 20:20:51.173928', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.191489', '2017-03-27 20:20:51.191489', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.207806', '2017-03-27 20:20:51.207806', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.223797', '2017-03-27 20:20:51.223797', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.237946', '2017-03-27 20:20:51.237946', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.251480', '2017-03-27 20:20:51.251480', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.274099', '2017-03-27 20:20:51.274099', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.290563', '2017-03-27 20:20:51.290563', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.301898', '2017-03-27 20:20:51.301898', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.320585', '2017-03-27 20:20:51.320585', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.336617', '2017-03-27 20:20:51.336617', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.348952', '2017-03-27 20:20:51.348952', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:20:51.364149', '2017-03-27 20:20:51.364149', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:14.991608', '2017-03-27 20:24:14.991608', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.277901', '2017-03-27 20:24:15.277901', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.288793', '2017-03-27 20:24:15.288793', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.299214', '2017-03-27 20:24:15.299214', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.313744', '2017-03-27 20:24:15.313744', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.341292', '2017-03-27 20:24:15.341292', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.353590', '2017-03-27 20:24:15.353590', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.369898', '2017-03-27 20:24:15.369898', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.386095', '2017-03-27 20:24:15.386095', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.402386', '2017-03-27 20:24:15.402386', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.417350', '2017-03-27 20:24:15.417350', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.429952', '2017-03-27 20:24:15.429952', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.445604', '2017-03-27 20:24:15.445604', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.461720', '2017-03-27 20:24:15.461720', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.479687', '2017-03-27 20:24:15.479687', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.492309', '2017-03-27 20:24:15.492309', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.504777', '2017-03-27 20:24:15.504777', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:15.519934', '2017-03-27 20:24:15.519934', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:53.627688', '2017-03-27 20:24:53.627688', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:53.657035', '2017-03-27 20:24:53.657035', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:53.669011', '2017-03-27 20:24:53.669011', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:53.941605', '2017-03-27 20:24:53.941605', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:53.956537', '2017-03-27 20:24:53.956537', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:53.975029', '2017-03-27 20:24:53.975029', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:53.989868', '2017-03-27 20:24:53.989868', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.003232', '2017-03-27 20:24:54.003232', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.018785', '2017-03-27 20:24:54.018785', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.036904', '2017-03-27 20:24:54.036904', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.054940', '2017-03-27 20:24:54.054940', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.068465', '2017-03-27 20:24:54.068465', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.086304', '2017-03-27 20:24:54.086304', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.099736', '2017-03-27 20:24:54.099736', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.115365', '2017-03-27 20:24:54.115365', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.129807', '2017-03-27 20:24:54.129807', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.140684', '2017-03-27 20:24:54.140684', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_authusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "authusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:24:54.155604', '2017-03-27 20:24:54.155604', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.518433', '2017-03-27 20:27:08.518433', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.805538', '2017-03-27 20:27:08.805538', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.825154', '2017-03-27 20:27:08.825154', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.850186', '2017-03-27 20:27:08.850186', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.870993', '2017-03-27 20:27:08.870993', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.889625', '2017-03-27 20:27:08.889625', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.915396', '2017-03-27 20:27:08.915396', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.937104', '2017-03-27 20:27:08.937104', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.958645', '2017-03-27 20:27:08.958645', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:08.981485', '2017-03-27 20:27:08.981485', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:09.003531', '2017-03-27 20:27:09.003531', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:09.028294', '2017-03-27 20:27:09.028294', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:09.048804', '2017-03-27 20:27:09.048804', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:09.077339', '2017-03-27 20:27:09.077339', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:09.099032', '2017-03-27 20:27:09.099032', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:09.118434', '2017-03-27 20:27:09.118434', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:09.139234', '2017-03-27 20:27:09.139234', 298486374)
+ERROR:  duplicate key value violates unique constraint "index_licenseusers_on_email"
+DETAIL:  Key (email)=() already exists.
+STATEMENT:  INSERT INTO "licenseusers" ("created_at", "updated_at", "id") VALUES ('2017-03-27 20:27:09.167205', '2017-03-27 20:27:09.167205', 298486374)

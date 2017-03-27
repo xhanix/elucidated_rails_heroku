@@ -56,7 +56,21 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'stripe-ruby-mock'
   gem 'database_cleaner'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'guard-rspec'
+  gem 'spring-commands-rspec'
+  gem 'vcr'
+  gem 'mocha'
+  gem "fakeredis", :require => "fakeredis/rspec"
+  gem 'faker', '~> 1.7', '>= 1.7.3'
 end
+
+group :test do
+  gem 'webmock'
+end
+
 gem 'aws-sdk', '< 2.0'
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
