@@ -61,5 +61,15 @@ class StripeMailer < ActionMailer::Base
 		mail(to: @user.email, subject: "Your eLucidaid License Key and Invoice")
 	end
 
+	def braintree_receipt(subscription)
+		@local_record = Subscription.find_by!(braintree_id: subscription)
+		@user = local_record.user
+		if subscription.transactions.count > 0 and subscription.transactions.first.amount > 100
+			@paid_on = subscription.transactions.first.created_at
+			@download_link =  Rails.application.routes.url_helpers.app_download_url(@local_record.guid,:host => 'elucidaid.com')
+			@account_link = Rails.application.routes.url_helpers.subscription_url(@local_record.id, :host => 'elucidaid.com')
+			mail(to: @user.email, subject: "Your eLucidaid Subscription Receipt")
+		end
+	end
 	
 end
