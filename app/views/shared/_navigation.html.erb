@@ -17,6 +17,7 @@
       <% if authuser_signed_in? %>
         <li><%= link_to('Admin Logout', destroy_authuser_session_path, :method => :delete) %></li>
       <% elsif licenseuser_signed_in? %>
+        <li><%= link_to('Account', subscription_path(User.find_by(email: current_licenseuser.email).subscriptions.last.id), :method => :get,style: "color:blue;") %></li>
         <li><%= link_to('Log Out', destroy_authuser_session_path, :method => :delete,style: "color:blue;") %></li>
       <% end %>
         <li><a href="<%= static_pages_pricing_url %>">Pricing</a></li>
