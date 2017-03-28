@@ -374,11 +374,13 @@
       $('#submit-button').hide();
       $('#card-field-container').hide();
       if (nameField.value == "" )  {
+        nameField.focus();
         errorElement.textContent = 'Please enter your name and email to proceed.';
         errorElement.classList.add('visible');
         return false;
       } 
       else if (!validateEmail(emailField.value)) {
+        emailField.focus();
         errorElement.textContent = 'Please enter a valid email address.';
         errorElement.classList.add('visible');
         return false;
@@ -387,7 +389,7 @@
         errorElement.classList.remove('visible');
         paypalInstance.tokenize({
             flow: 'vault', // This enables the Vault flow
-            billingAgreementDescription: 'Your agreement description',
+            billingAgreementDescription: '7 Day Free Trial, followed by $149.99/year for eLucidaid premium License. This subscription will automatically auto renew. You can request cancellation at any time.',
             locale: 'en_US',
             enableShippingAddress: false,
           }, function (tokenizeErr, payload) {
