@@ -46,7 +46,7 @@ class SubscriptionsController < ApplicationController
       )
   end
   if subscription.save
-    #StripeSubscriberWorker.perform_async(subscription.guid)
+    StripeSubscriberWorker.perform_async(subscription.guid)
     render json: { guid: subscription.guid }
   else
     errors = subscription.errors.full_messages

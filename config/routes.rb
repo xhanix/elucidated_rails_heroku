@@ -1,7 +1,13 @@
+ require 'sidekiq/web'
+
 Rails.application.routes.draw do
   devise_for :licenseusers
   devise_for :authusers
   get 'plans/show'
+
+  authenticate :authuser do
+   mount Sidekiq::Web => '/sidekiq'
+  end
 
   resources :sales
   resources :products

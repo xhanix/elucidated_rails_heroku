@@ -7,7 +7,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'devise'
-require 'sidekiq/testing'
+require 'bunny-mock'
 Sidekiq::Testing.fake!
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -60,11 +60,19 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
-RSpec.configure do |config|
-  config.before(:each) do
-    Sidekiq::Worker.clear_all
-  end
+
+RSpec::Sidekiq.configure do |config|
+  # Clears all job queues before each example
+  config.clear_all_enqueued_jobs = true # default => true
+
+  # Whether to use terminal colours when outputting messages
+  config.enable_terminal_colours = true # default => true
+
+  # Warn when jobs are not enqueued to Redis but to a job array
+  config.warn_when_jobs_not_processed_by_sidekiq = true # default => true
 end
+
+
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

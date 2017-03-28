@@ -65,6 +65,8 @@ group :development, :test do
   gem 'mocha'
   gem "fakeredis", :require => "fakeredis/rspec"
   gem 'faker', '~> 1.7', '>= 1.7.3'
+  gem 'bunny-mock'
+  gem 'rspec-sidekiq'
 end
 
 group :test do

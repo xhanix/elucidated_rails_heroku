@@ -21,8 +21,12 @@ class Publisher
   # put any specific RabbitMQ settings
   # like host or port
   def self.connection
-    @connection ||= Bunny.new(ENV["RABBITMQ_BIGWIG_TX_URL"]).tap do |c|
-      c.start
+    if Rails.env.test?
+      BunnyMock.new.start
+    else
+      @connection ||= Bunny.new(ENV["RABBITMQ_BIGWIG_TX_URL"]).tap do |c|
+        c.start
+      end
     end
   end
 end
