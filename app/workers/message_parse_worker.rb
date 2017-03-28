@@ -8,7 +8,7 @@ class MessageParseWorker
 			user = User.find_by(email: email)
 			#subscription = user.subscriptions.find_by(guid: guid)
 			sub_status = 'Active' # use instead of subscription.status to leave Parse account active for now
-			return unless subscription
+			#return unless subscription
 			Publisher.publish({username: user.fullname, email: user.email, description: user.description, licenseState: sub_status})
 		end 
 	end
