@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'devise'
 require 'bunny-mock'
+require 'capybara/rspec'
 Sidekiq::Testing.fake!
 # Add additional requires below this line. Rails is not loaded until this point!
 

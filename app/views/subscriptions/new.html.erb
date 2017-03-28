@@ -66,26 +66,26 @@
 
 <style type="text/css">
   @keyframes spinner {
-  to {transform: rotate(360deg);}
-}
- 
-.spinner:before {
-  content: '';
-  box-sizing: border-box;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 80px;
-  height: 80px;
-  margin-top: -10px;
-  margin-left: -10px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  border-top-color: #333;
-  animation: spinner .6s linear infinite;
-  margin-top: -150px;
-  margin-left: -45px;
-}
+    to {transform: rotate(360deg);}
+  }
+
+  .spinner:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    border-top-color: #333;
+    animation: spinner .6s linear infinite;
+    margin-top: -150px;
+    margin-left: -45px;
+  }
   .card-form {
     font-family: 'Century Gothic',CenturyGothic,AppleGothic,sans-serif;
     font-size: 19px;
@@ -218,6 +218,7 @@
     var emailField = form.querySelector('input[name=email]');
     var loader = document.querySelector('.loader');
     var paycardButton = document.querySelector("#pay-with-card-btn");
+    var wantsPaypal = false;
     var card = elements.create('card', {
       iconStyle: 'solid',
       style: {
@@ -284,16 +285,18 @@
       errorElement.classList.remove('visible');
       $('#submit-button').show();
       $('#card-field-container').show();
-      });
+    });
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       if (!validateEmail(emailField.value)) {
+        emailField.focus();
         errorElement.textContent = 'Enter a valid email address.';
         errorElement.classList.add('visible');
         return false
       }
       else if (nameField.value=="") {
+        nameField.focus();
         errorElement.textContent = 'Please enter your name.';
         errorElement.classList.add('visible');
         return false
@@ -371,6 +374,7 @@
     paypalButton.addEventListener('click', function (event) {
       // Because tokenization opens a popup, this has to be called as a result of
       // customer action, like clicking a button—you cannot call this at any time.
+      wantsPaypal = true;
       $('#submit-button').hide();
       $('#card-field-container').hide();
       if (nameField.value == "" )  {
@@ -422,6 +426,15 @@
       }, false);
   });
   });
+
+    $('input[name=email]').on( "keydown", function(e) {
+      if (e.keyCode  == 13) {
+        if (wantsPaypal) {
+          paypalButton.click();
+        }
+      }
+    });
+
     function validateEmail(email)  {  
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))  
       {  
