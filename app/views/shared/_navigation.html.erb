@@ -20,9 +20,9 @@
         <li><%= link_to('Account', subscription_path(User.find_by(email: current_licenseuser.email).subscriptions.last.id), :method => :get,style: "color:blue;") %></li>
         <li><%= link_to('Log Out', destroy_authuser_session_path, :method => :delete,style: "color:blue;") %></li>
       <% end %>
-        <li><a href="<%= static_pages_pricing_url %>">Pricing</a></li>
+        <li><a href="<%= pricing_path %>">Pricing</a></li>
         <li><a href="<%= new_subscription_path %>" data-turbolinks="false">Download</a></li>
-        <li><a href="<%= static_pages_features_url %>">Features</a></li>
+        <li><a href="<%= features_path %>">Features</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

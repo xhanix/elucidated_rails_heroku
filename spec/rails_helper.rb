@@ -9,6 +9,7 @@ require 'shoulda/matchers'
 require 'devise'
 require 'bunny-mock'
 require 'capybara/rspec'
+require 'capybara/rails'
 Sidekiq::Testing.fake!
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -39,6 +40,10 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
   config.include Devise::Test::ControllerHelpers, :type => :controller
   Rails.application.routes.default_url_options[:host] = 'elucidaid.com'
   # RSpec Rails can automatically mix in different behaviours to your tests
@@ -55,7 +60,7 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
-
+  config.include Capybara::DSL
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
@@ -73,7 +78,9 @@ RSpec::Sidekiq.configure do |config|
   config.warn_when_jobs_not_processed_by_sidekiq = true # default => true
 end
 
-
+RSpec.configure do |config|
+  config.infer_spec_type_from_file_location!
+end
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

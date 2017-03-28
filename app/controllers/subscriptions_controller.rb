@@ -3,6 +3,7 @@ class SubscriptionsController < ApplicationController
   before_action :load_subscription
   before_action :authenticate_authuser!, only: [:edit, :update, :destroy, :index]
   before_action :authenticate_licenseuser!, only: [:show, :cancel]
+
   def index
     @subscription = Subscription.all
   end

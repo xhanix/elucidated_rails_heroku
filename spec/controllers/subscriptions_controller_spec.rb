@@ -1,16 +1,29 @@
 require 'rails_helper'
+Devise::Test::ControllerHelpers
 
 RSpec.describe SubscriptionsController, type: :controller do
 	
 
+	
+	describe 'GET #new' do
+		let(:plan) { FactoryGirl.create(:plan) }
+		
+		it "assigns @plan" do
+	      p plan
+	      get :new
+	      expect(assigns(:plans)).to eq([plan])
+	    end
+	end
 	describe 'GET #show' do
 		before { get :show, params: { id: 1 } }
 		it { should redirect_to(new_licenseuser_session_url) }
 	end
+
 	describe 'GET #index' do
 		before { get :index}
 		it { should redirect_to(new_authuser_session_url) }
 	end
+
 
 	describe 'POST #create' do
 		it "sends job to background subscriber worker" do
@@ -22,18 +35,6 @@ RSpec.describe SubscriptionsController, type: :controller do
 			#assert_equal 1, StripeSubscriberWorker.jobs.size
 			StripeSubscriberWorker.drain
 		end
-		it "sends job to background Parse messenger worker" do
-			#user = FactoryGirl.attributes_for(:user)
-			Sidekiq::Worker.clear_all
-			FactoryGirl.create(:subscription)
-			expect {
-				MessageParseWorker.perform_async(1)
-			}.to change(MessageParseWorker.jobs, :size).by(1)
-			MessageParseWorker.drain
-            assert_equal 0, MessageParseWorker.jobs.size
-		end
-
-
 	end
 
 

@@ -30,11 +30,11 @@ Rails.application.routes.draw do
   end
   resources :plans
   root 'static_pages#home'
-  get 'static_pages/about'
-  get 'static_pages/pricing'
-  get 'static_pages/viewsubs'
-  get 'static_pages/features'
-  get 'static_pages/contact'
+  get '/about', to: 'static_pages#about'
+  get '/home', to: 'static_pages#home'
+  get '/pricing', to: 'static_pages#pricing'
+  get '/features', to: 'static_pages#features'
+  get '/contact', to: 'static_pages#contact'
   get  "/client_token", to: 'subscriptions#clienToken', as: :client_token
   post '/webhooks', to: 'webhooks#parse', as: :webhook
 end
