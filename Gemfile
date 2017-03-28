@@ -68,7 +68,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'webmock'
+  gem 'shoulda-matchers', require: false
 end
 
 gem 'aws-sdk', '< 2.0'

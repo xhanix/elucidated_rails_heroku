@@ -10,5 +10,5 @@ RSpec.describe User, type: :model do
   it "is invalid without a email" do
   	expect(FactoryGirl.build(:user, email: nil)).not_to be_valid
   end
-  it "returns a contact's full name as a string"
+  
 end

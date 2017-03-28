@@ -20,7 +20,7 @@ class Subscription < ApplicationRecord
 	belongs_to :plan
 	has_paper_trail
 	before_save :populate_guid
-	validates_uniqueness_of :guid
+	validates_uniqueness_of :guid, :case_sensitive => false
 	after_save :send_to_Parse_server
 	
 	private
@@ -29,13 +29,13 @@ class Subscription < ApplicationRecord
 			while !valid? || self.guid.nil?
 				self.guid = SecureRandom.random_number(1_000_000_000).to_s(36)
 			end 
-		end 
+		end
 	end
 
 	def send_to_Parse_server
 		if self.guid.present? and self.status.present?
 			user = self.user
-			MessageParseWorker.perform_async(user.email, self.guid)
+			MessageParseWorker.perform_async(user.email)
 		end
 	end
 
