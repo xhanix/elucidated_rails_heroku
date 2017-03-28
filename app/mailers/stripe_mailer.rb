@@ -12,6 +12,11 @@ class StripeMailer < ActionMailer::Base
 		mail(to: 'hani@aiderbotics.com', subject: 'Woo! Charge Succeeded!')
 	end
 
+	def admin_invoice_succeeded(invoice)
+		@invoice = invoice
+		mail(to: 'hani@aiderbotics.com', subject: 'Woo! New Invoice and Download!')
+	end
+
 	def admin_subscription_cancelled(guid)
 		@subscription = Subscription.find_by(guid: guid)
 		@user = @subscription.user
