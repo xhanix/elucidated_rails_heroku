@@ -18,10 +18,6 @@ class SubscriptionsController < ApplicationController
     @plan = Plan.find_by(name: 'elucidaid-premium-plan')
   end
 
-  #braintree client token
-  def clientToken
-    @token = Braintree::ClientToken.generate
-  end
 
   def create
     plan = Plan.find_by(name: 'elucidaid-premium-plan')
@@ -36,17 +32,22 @@ class SubscriptionsController < ApplicationController
       plan: plan,
       user: user,
       payment_status: 'Free-Trial',
-      braintree_id: braintree_nonce
+      braintree_id: braintree_nonce,
+      status: 'new',
+      stripe_id: ''
       )
    else
     subscription = Subscription.new(
       plan: plan,
       user: user,
       payment_status: 'Free-Trial',
-      stripe_id: stipe_token
+      stripe_id: stipe_token,
+      status: 'new',
+      braintree_id: ''
       )
+
   end
-  if subscription.save
+  if subscription.save!
     StripeSubscriberWorker.perform_async(subscription.guid)
     render json: { guid: subscription.guid }
   else
@@ -71,8 +72,8 @@ end
     resp = HTTParty.get(@subscription.plan.product.file.url)
     filename = @subscription.plan.product.file.url
     send_data resp.body,
-    :filename => File.basename(filename),
-    :content_type => resp.headers['Content-Type']
+      :filename => File.basename(filename),
+      :content_type => resp.headers['Content-Type']
   end
 
   def cancel
@@ -94,8 +95,8 @@ end
     rescue Stripe::StripeError, Braintree::NotFoundError => e
       flash.now[:alert] = "Something went wrong! Please contact us for help. #{e.message}"
     end
-      StripeMailer.delay.admin_subscription_cancelled(subscription.guid)
       subscription.update(status: 'Cancelled')
+      StripeMailer.delay.admin_subscription_cancelled(subscription.guid)
       #Don't cancel now. Send email to admin for manual review and email user.
   else
     flash.now[:alert] = "Cannot process request."

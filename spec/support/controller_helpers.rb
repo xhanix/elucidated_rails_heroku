@@ -1,4 +1,5 @@
 module ControllerHelpers
+  
   def login_with(user = double('licenseuser'), scope = :licenseuser)
     current_user = "current_#{scope}".to_sym
     if user.nil?

@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'stripe', '~> 1.26.0' , :source => 'https://code.stripe.com/'
+gem 'stripe', '~> 1.31.0' , :source => 'https://code.stripe.com/'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'httparty'
@@ -54,8 +54,7 @@ gem 'rails_12factor', group: :production
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'stripe-ruby-mock'
-  gem 'database_cleaner'
+  gem 'stripe-ruby-mock', '~> 2.4.0', :require => 'stripe_mock'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
@@ -73,6 +72,10 @@ end
 
 group :test do
   gem 'shoulda-matchers', require: false
+  gem 'database_cleaner'
+  gem 'simplecov', :require => false
+  gem 'webmock'
+
 end
 
 gem 'aws-sdk', '< 2.0'

@@ -1,6 +1,6 @@
 class Subscription < ApplicationRecord
 	include AASM
-	aasm column: 'state' do
+	aasm column: 'state', whiny_transitions: false do
 		state :pending, initial: true
 		state :processing
 		state :finished
@@ -20,7 +20,8 @@ class Subscription < ApplicationRecord
 	belongs_to :plan
 	has_paper_trail
 	before_save :populate_guid
-	validates_uniqueness_of :guid, :case_sensitive => false
+	validates :guid, uniqueness: { case_sensitive: false }
+	validates :status, uniqueness: { scope: :user_id, message: "Active subscription already exists."}
 	after_save :send_to_Parse_server
 	
 	private
@@ -44,55 +45,56 @@ class Subscription < ApplicationRecord
 	def subscribe_customer
 		user = self.user
 		plan = self.plan
-		source = self.stripe_id || self.braintree_id #temp holds token or nonce till replaced with actual subscription id
 		begin
 			new_sub = nil
 			save!
-			if user.stripe_customer_id.blank? and self.stripe_id.present?
-        		customer = Stripe::Customer.create(
-          		source: source,
-          		email: user.email,
-          		plan: plan.stripe_id,
-          		description: user.description
-        		)
-        		user.stripe_customer_id = customer.id
-        		user.save!
-        		new_sub = customer.subscriptions.first
-        		sub_provider = "Stripe"
-        	elsif user.stripe_customer_id.present?
-        		customer = Stripe::Customer.retrieve(user.stripe_customer_id)
-        		new_sub = customer.subscriptions.create(plan: plan.stripe_id)
-        		sub_provider = "Stripe"
-        	elsif user.braintree_id.blank? and self.braintree_id.present?
-        		result = Braintree::Customer.create(
-		          :payment_method_nonce => source,
-		          :email => user.email,
-		          :first_name => user.fullname,
-		          )
-        		if result.success?
-					new_sub = Braintree::Subscription.create(
-						:payment_method_token => result.customer.default_payment_method.token,
-				        :plan_id => 'elucidaid_premium'
-			        )
-	        		user.braintree_id = result.customer.id
+			if self.stripe_id.present?
+				if user.stripe_customer_id.present?
+	        		#my user already has stripe customer number, update payment sourse on stripe
+	        		customer = Stripe::Customer.retrieve(user.stripe_customer_id)
+	        		customer.source = self.stripe_id
+	        		customer.save
+	        	elsif user.stripe_customer_id.blank?
+					#my user is a new stripe customer, update my user with stripe customer id
+	        		customer = Stripe::Customer.create(
+	          		source: self.stripe_id,
+	          		email: user.email,
+	          		description: user.description
+	        		)
+	        		user.stripe_customer_id = customer.id
 	        		user.save!
-	        		sub_provider = "Braintree"
-				else
-					p result.errors
-				end
-        	elsif user.braintree_id.present?
-        		customer = Braintree::Customer.find(user.braintree_id)
-        		new_sub = Braintree::Subscription.create(
-		          :payment_method_token => customer.default_payment_method.token,
-		          :plan_id => 'elucidaid_premium'
-		        )
-		        sub_provider = "Braintree"
-        	end
-        	if sub_provider == "Stripe"
-        		self.update(stripe_id: new_sub.id)
-        	else
-        		self.update(braintree_id: new_sub.subscription.id) #braintree returns results object with create
-        		StripeMailer.delay.braintree_new_subscription(self)
+	        	end
+	        		customer = Stripe::Customer.retrieve(user.stripe_customer_id)
+	        		new_sub = customer.subscriptions.create(plan: plan.stripe_id)
+	        		self.update(stripe_id: new_sub.id)
+        	elsif self.braintree_id.present?
+        		if user.braintree_id.blank? 
+        			#my user is a new Braintree customer, update my user with braintree_id
+	        		result = Braintree::Customer.create(
+			          :payment_method_nonce => self.braintree_id,
+			          :email => user.email,
+			          :first_name => user.fullname,
+			          )
+	        		if result.success?
+						new_sub = Braintree::Subscription.create(
+							:payment_method_token => result.customer.default_payment_method.token,
+					        :plan_id => 'elucidaid_premium'
+				        )
+		        		user.braintree_id = result.customer.id
+		        		user.save!
+					else
+						p result.errors
+					end
+	        	elsif user.braintree_id.present?
+	        		#my user already has braintree_id, just subscribe with the new payment method
+	        		customer = Braintree::Customer.find(user.braintree_id)
+	        		new_sub = Braintree::Subscription.create(
+			          :payment_method_token => customer.default_payment_method.token,
+			          :plan_id => 'elucidaid_premium'
+			        )
+	        		self.update(braintree_id: new_sub.subscription.id) #braintree returns results object with create
+	        		StripeMailer.delay.braintree_new_subscription(self)
+	        	end
         	end
         	self.update(status: 'Active',expires_on: Date.current+14.days)
         	self.finish!

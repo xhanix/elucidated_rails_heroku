@@ -6,10 +6,19 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 require 'shoulda/matchers'
+require_relative 'support/controller_helpers'
+require_relative 'support/controller_macros'
 require 'devise'
 require 'bunny-mock'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'aasm/rspec'
+require 'simplecov'
+require 'webmock/rspec'
+require 'stripe_mock'
+
+SimpleCov.start
+
 Sidekiq::Testing.fake!
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -39,12 +48,15 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
-  end
-  config.include Devise::Test::ControllerHelpers, :type => :controller
+  config.use_transactional_fixtures = false
+ 
+    # For Devise <= 4.1.0
+    config.include Devise::Test::ControllerHelpers, :type => :controller
+    # Use the following instead if you are on Devise >= 4.1.1
+  config.extend ControllerMacros, :type => :controller
+
+ 
+
   Rails.application.routes.default_url_options[:host] = 'elucidaid.com'
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and

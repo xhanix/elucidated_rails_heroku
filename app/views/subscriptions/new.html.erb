@@ -342,7 +342,11 @@
     });
 
     braintree.client.create({
-      authorization:  "<%= @token = Braintree::ClientToken.generate %>",
+
+      authorization:  "<%= if Rails.env.test?
+         @token = 'fake-paypal-future-nonce'
+         else @token = Braintree::ClientToken.generate end%>",
+
     }, function (err, clientInstance) {
       braintree.dataCollector.create({
         client: clientInstance,

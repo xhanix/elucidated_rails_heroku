@@ -455,3 +455,6 @@ STATEMENT:  INSERT INTO "subscriptions" ("user_id", "plan_id", "stripe_id", "cre
 ERROR:  insert or update on table "subscriptions" violates foreign key constraint "fk_rails_933bdff476"
 DETAIL:  Key (user_id)=(1) is not present in table "users".
 STATEMENT:  INSERT INTO "subscriptions" ("user_id", "plan_id", "stripe_id", "created_at", "updated_at", "guid", "state") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"
+ERROR:  insert or update on table "plans" violates foreign key constraint "fk_rails_3f286e8eef"
+DETAIL:  Key (product_id)=(0) is not present in table "products".
+STATEMENT:  INSERT INTO "plans" ("stripe_id", "name", "description", "amount", "interval", "created_at", "updated_at", "product_id", "trial_period_days") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING "id"

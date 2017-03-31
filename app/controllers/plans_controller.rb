@@ -1,6 +1,6 @@
 class PlansController < ApplicationController
 	before_action :set_plan, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_authuser!, only: [:show, :edit, :update, :destroy,:index]
+  before_action :authenticate_authuser!, only: [:show, :edit, :update, :destroy,:index,:create, :new]
 	def index
 		@plans = Plan.all
 	end
@@ -20,16 +20,17 @@ end
 
 def create
 	@plan = Plan.new(new_plan_params)
-
 	respond_to do |format|
 	begin
 			Stripe::Plan.create(
 				id: new_plan_params[:stripe_id],
-				amount: new_plan_params[:amount],
+				amount: new_plan_params[:amount].to_i,
 				currency: 'usd',
 				interval: new_plan_params[:interval],
 				name: new_plan_params[:name],
+        trial_period_days: new_plan_params[:trial_period_days].to_i
 				)
+
 		rescue Stripe::StripeError => e
 			puts e.message
 			return @plan
@@ -40,7 +41,7 @@ def create
 			format.json { render :show, status: :created, location: @plan }
 		else
 			format.html { render :new }
-			format.json { render json: @product.errors, status: :unprocessable_entity }
+			format.json { render json: @plan.errors, status: :unprocessable_entity }
 		end
 	end
 
@@ -49,15 +50,12 @@ end
   # PATCH/PUT /plans/1
   # PATCH/PUT /plans/1.json
   def update
-  	respond_to do |format|
-  		product = Product.find(plan_params[:product_id])
-  		if @plan.update(product: product)
-  			format.html { redirect_to @plan, notice: 'Plan was successfully updated.' }
-  			format.json { render :show, status: :ok, location: @plan }
-  		else
-  			format.html { render :edit }
-  			format.json { render json: @plan.errors, status: :unprocessable_entity }
-  		end
+      begin
+       product = Product.find(plan_params[:product_id])
+  		 @plan.update!(product: product)
+  		 redirect_to @plan, notice: 'Plan was successfully updated.'
+  		rescue
+  		render json: @plan.errors, status: :unprocessable_entity 
   	end
   end
 
@@ -70,7 +68,6 @@ end
     end
   	@plan.destroy
   	respond_to do |format|
-  		
   		format.html { redirect_to plans_url, notice: 'Plan was successfully destroyed.' }
   		format.json { head :no_content }
   	end
